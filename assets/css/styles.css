@@ -1,0 +1,57 @@
+/* add reset */
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  color: #888888;
+  scroll-behavior: smooth;  
+}
+
+/* add my global styles */
+h1, h2, h3, h4, h5, h6, p {
+  margin-bottom: 1em;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+a:link {
+  color: #ff0000;
+}
+/* body responsive layout */
+body {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 15px;
+}
+body > * {
+  padding: 25px;
+  outline: solid gray 1px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+/* header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+main section {
+  margin-bottom: 50px;
+}
+/* questions */
+/* options */
+#options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+/* buttons */
+#options button {
+  width: 400px;
+  height: 50px;
+  text-align: center;
+  padding: auto;
+
+}
+/* scores */

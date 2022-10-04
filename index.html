@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Quiz Game</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <a href="scores.html">View High Scores</a>
+    <span id="timer">Time: <span id="time-left">59</span></span>
+  </header>
+  <main>
+    <section id="intro">
+      <h1>Coding Quiz Challenge</h1>
+      <p>Let's brush up on your JavaScript knowledge!  Answer the following questions about JS features before the time runs out.  Remember, wrong answers reduce your time left, so try to get them all correct!</p>
+      <button id="start-btn" type="button" name="Start">Start Game</button>
+    </section>
+    <section id="questions">
+      <h2>Question 1</h2>
+      <p>Here is your question</p>
+      <div id="options">
+        <button id="opt-btn-1" data-correct="false">Option 1</button>
+        <button id="opt-btn-2" data-correct="true">Option 2</button>
+        <button id="opt-btn-3" data-correct="false">Option 3</button>
+        <button id="opt-btn-4" data-correct="false">Option 4</button>
+      </div>
+    </section>
+  </main>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
