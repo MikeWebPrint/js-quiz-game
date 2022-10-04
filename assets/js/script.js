@@ -20,9 +20,18 @@ var score = 0;
 // section#intro display: none
 // section#questions display: block
 // set timer to 59
-var setTime = function(){
-  var timeLeft = document.querySelector('#time-left')
-  timeLeft.textContent = 50;
+var time = 59;
+var tictoc = function() {
+  time = time--;
 }
+var setTime = function() {
+  setInterval(tictoc, 1000);
+  var timeLeft = document.querySelector('#time-left');
+  timeLeft.innerHTML = time;
+}
+// tictoc();
 setTime();
+
+// // tictoc();
+// // setTime();
 // setInterval() {x, 1000}
