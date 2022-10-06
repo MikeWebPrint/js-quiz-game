@@ -20,9 +20,10 @@ var score = 0;
 // section#intro display: none
 // section#questions display: block
 // set timer to 59
-var time = 59;
+var time = ;
 var tictoc = function() {
-  time = time--;
+  time = 59
+  time--;
 }
 var setTime = function() {
   setInterval(tictoc, 1000);
@@ -35,3 +36,11 @@ setTime();
 // // tictoc();
 // // setTime();
 // setInterval() {x, 1000}
+while (i > 0) {
+time -= t
+}
+
+// JS questions from 
+// https://www.includehelp.com/mcq/javascript-multiple-choice-questions-mcqs.aspx
+
+

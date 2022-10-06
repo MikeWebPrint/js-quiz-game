@@ -3,7 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: sans-serif;
-  color: #888888;
+
   scroll-behavior: smooth;  
 }
 
@@ -11,24 +11,31 @@
 h1, h2, h3, h4, h5, h6, p {
   margin-bottom: 1em;
 }
+h1, h2, h3, h4 {
+  color: #283866;
+}
 a {
   text-decoration: none;
   color: inherit;
 }
 a:link {
-  color: #ff0000;
+  color: #be0000;
 }
 /* body responsive layout */
 body {
   max-width: 1000px;
   margin: 0 auto;
   padding: 15px;
+  font-size: 20px;
+  color: #4e4e4e;
 }
 body > * {
   padding: 25px;
   outline: solid gray 1px;
   border-radius: 10px;
   margin-bottom: 10px;
+  background-color: #f7f7f8;
+
 }
 /* header */
 header {
@@ -44,14 +51,42 @@ main section {
 #options {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
+  padding: 20px 0;
 }
 /* buttons */
-#options button {
-  width: 400px;
+button {
+  width: 200px;
   height: 50px;
   text-align: center;
   padding: auto;
+  margin: 0 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-image: linear-gradient(to  right,#00487a, #175a88, #00487a);
+  border: 0;
+  border-radius: 3px;
+  transition: all ease-in-out .25s;
+}
+button:hover, button:active, button:focus {
+  background-image: linear-gradient(to right, #005699,#186da8, #005699);
+  transition: all  .25s;
+}
+button[data-correct] {
+  width: 400px;
+}
+input {
+  width: 10;
+  height: 40px;
+  font-size: 16px;
+  color: inherit;
+  text-align: center;
+}
+input:focus {
+  background-color: #d9eeff;
 
+}
+input:focus::placeholder {
+  color: transparent;
 }
 /* scores */

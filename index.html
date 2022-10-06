@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JavaScript Quiz Game</title>
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 </head>
 <body>
   <header>
-    <a href="scores.html">View High Scores</a>
-    <span id="timer">Time: <span id="time-left">59</span></span>
+    <a href="/">View High Scores</a>
+    <span id="timer">Time: <span id="time-left"></span></span>
   </header>
   <main>
     <section class="intro">
@@ -19,13 +20,33 @@
       <button id="start-btn" type="button" name="Start">Start Game</button>
     </section>
     <section class="questions">
-      <h2 id="js-question">Question 1</h2>
-      <p>Here is your question</p>
+      <h2 id="questionNum">Question 1</h2>
+      <p id="jsQuestion">Here is your question</p>
       <div id="options">
-        <button id="opt-btn-1" data-correct="false">Option 1</button>
-        <button id="opt-btn-2" data-correct="true">Option 2</button>
-        <button id="opt-btn-3" data-correct="false">Option 3</button>
-        <button id="opt-btn-4" data-correct="false">Option 4</button>
+        <button id="opt-btn-1" data-correct="">Option 1</button>
+        <button id="opt-btn-2" data-correct="">Option 2</button>
+        <button id="opt-btn-3" data-correct="">Option 3</button>
+        <button id="opt-btn-4" data-correct="">Option 4</button>
+        <hr>
+      </div>
+      <h3 id="result">Correct!</h3>
+    </section>
+    <section id="won">
+      <h2>All done!</h2>
+      <h3 >Your final score is: <span id="score"></span></h3>
+      <form action="">
+        <label for="initials">Enter your initials</label>
+        <input type="text" name="initials" placeholder="ABC">
+      </form>
+    </section>
+    <section>
+      <h2 id="highScoresTitle">High Scores</h2>
+      <ul id="highscores">
+
+      </ul>
+      <div>
+        <button id="scoresBack">Go Back</button>
+        <button id="clearHighScores">Clear High Scores</button>
       </div>
     </section>
   </main>
