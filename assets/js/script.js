@@ -76,8 +76,12 @@ function showHighScores() {
   highScoresPage.appendChild(scoreButtons);
 }
 function hideHeader() {
-  // var body = document.querySelector('body');
   var header = document.getElementById('header');
   header.remove();
 }
+function hideIntro() {
+  var intro = document.getElementById('intro');
+  intro.remove();
+}
 // showHighScores();
+// hideIntro();
