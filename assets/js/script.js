@@ -83,5 +83,74 @@ function hideIntro() {
   var intro = document.getElementById('intro');
   intro.remove();
 }
+function showDone() {
+  // create and insert Done message and form section
+  var done = document.createElement('section');
+  done.setAttribute('id', 'done');
+  done.innerHTML = '<h2>All done!</h2><h3>Your final score is: <span id="score">'+ 'score ' + '</span></h3>';
+  var enterScore = document.createElement('form');
+  enterScore.innerHTML = '<label for="initials">Enter your initials</label>\n<input type="text" name="initials" placeholder="ABC">';
+  done.appendChild(enterScore);
+  document.body.appendChild(done);
+}
+function showQuestion() {
+  // create and insert question and options section
+  var questionSection = document.createElement('section');
+  questionSection.setAttribute('id', 'questions');
+  var questionNum = document.createElement('h2');
+  questionNum.innerHTML = 'JS Question <span id="questionNum">1</span>';
+  questionSection.appendChild(questionNum);
+  document.body.appendChild(questionSection); 
+  var jsQuestion = document.createElement('p');
+  jsQuestion.setAttribute('id', 'jsQuestion');
+  jsQuestion.textContent = 'Here is the text of your question.'
+  questionSection.appendChild(jsQuestion);
+  // create and insert options buttons
+  var options = document.createElement('div');
+  options.setAttribute('id', 'options');
+  questionSection.appendChild(options);
+  var optionButton = document.createElement('button');
+  optionButton.setAttribute('id', 'opt-btn-1');
+  optionButton.setAttribute('data-correct', true);
+  optionButton.innerHTML = 'Here is the correct answer';
+  options.appendChild(optionButton);
+
+  var optionButton = document.createElement('button');
+  optionButton.setAttribute('id', 'opt-btn-2');
+  optionButton.setAttribute('data-correct', false);
+  optionButton.innerHTML = 'Here is an incorrect answer';
+  options.appendChild(optionButton);
+
+  var optionButton = document.createElement('button');
+  optionButton.setAttribute('id', 'opt-btn-3');
+  optionButton.setAttribute('data-correct', false);
+  optionButton.innerHTML = 'Here is an incorrect answer';
+  options.appendChild(optionButton);
+
+  var optionButton = document.createElement('button');
+  optionButton.setAttribute('id', 'opt-btn-4');
+  optionButton.setAttribute('data-correct', false);
+  optionButton.innerHTML = 'Here is an incorrect answer';
+  options.appendChild(optionButton);
+
+  // console.log(questionSection.innerHTML);
+  var hr = document.createElement('hr');
+  questionSection.appendChild(hr);
+
+  showExplanation();
+
+
+}
+function showExplanation() {
+  var explanation = document.createElement('div');
+  explanation.setAttribute('id', 'result');
+  explanation.innerHTML = '<h3>Correct</h3>\n<p id="explanation">Javascript fact from previous question</p>';
+  var questionSection = document.querySelector('#questions');
+  questionSection.appendChild(explanation);
+}
+
+// showQuestion();
+// showExplanation();
 // showHighScores();
 // hideIntro();
+// showDone();
