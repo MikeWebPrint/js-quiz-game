@@ -40,7 +40,4 @@ while (i > 0) {
 time -= t
 }
 
-// JS questions from 
-// https://www.includehelp.com/mcq/javascript-multiple-choice-questions-mcqs.aspx
-
 
