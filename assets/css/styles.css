@@ -118,21 +118,23 @@ input:focus::placeholder {
   color: transparent;
 }
 /* scores */
-#highscores {
+#highScoresList {
   margin-bottom: 20px;
+  outline: 1px solid var(--accentColor2);
+  border-radius: var(--border-radius);
   /* width: 100%; */
   /* padding: 15px; */
 }
-#highscores div {
+.hsEntry {
   padding: 15px;
   /* outline: solid red 1px; */
   background: #ffffff;
   border-bottom: dashed 1px var(--accentColor2)
 
 } 
-#highscores div:nth-child(odd) {
+.hsEntry:nth-child(odd) {
   background: var(--background);
 }
-#highscores div:last-child {
+.hsEntry:last-child {
   border-bottom: none;
 }
