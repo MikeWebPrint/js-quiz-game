@@ -43,8 +43,8 @@ var score = 0;
 // while (i > 0) {
 // time -= t
 // }
-
 function showHighScores() {
+  hideHeader();
   // create and insert high scores section
   var highScoresPage = document.createElement('section');
   highScoresPage.setAttribute('id', 'highScoresPage');
@@ -63,50 +63,6 @@ function showHighScores() {
   var hsScore = '20';
   hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
   highScoresList.appendChild(hsEntry);
-
-  var hsEntry = document.createElement('div');
-  hsEntry.setAttribute('class', 'hsEntry')
-  var hsPosition = '1. ';
-  var hsInitials = 'MDJ';
-  var hsScore = '20';
-  hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
-  highScoresList.appendChild(hsEntry);
-  
-  var hsEntry = document.createElement('div');
-  hsEntry.setAttribute('class', 'hsEntry')
-  var hsPosition = '1. ';
-  var hsInitials = 'MDJ';
-  var hsScore = '20';
-  hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
-  highScoresList.appendChild(hsEntry);
-
-  var hsEntry = document.createElement('div');
-  hsEntry.setAttribute('class', 'hsEntry')
-  var hsPosition = '1. ';
-  var hsInitials = 'MDJ';
-  var hsScore = '20';
-  hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
-  highScoresList.appendChild(hsEntry);
-
-  var hsEntry = document.createElement('div');
-  hsEntry.setAttribute('class', 'hsEntry')
-  var hsPosition = '1. ';
-  var hsInitials = 'MDJ';
-  var hsScore = '20';
-  hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
-  highScoresList.appendChild(hsEntry);
-
-    var hsEntry = document.createElement('div');
-  hsEntry.setAttribute('class', 'hsEntry')
-  var hsPosition = '1. ';
-  var hsInitials = 'MDJ';
-  var hsScore = '20';
-  hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
-  highScoresList.appendChild(hsEntry);
-
-
-
-
   // create and insert buttons into scores section
   var scoreButtons = document.createElement('div');
   var backButton = document.createElement('button');
@@ -118,6 +74,10 @@ function showHighScores() {
   scoreButtons.appendChild(backButton);
   scoreButtons.appendChild(clearButton);
   highScoresPage.appendChild(scoreButtons);
-
 }
-showHighScores()
+function hideHeader() {
+  // var body = document.querySelector('body');
+  var header = document.getElementById('header');
+  header.remove();
+}
+// showHighScores();
