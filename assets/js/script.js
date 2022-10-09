@@ -332,11 +332,11 @@ function showQuestion() {
   // questionNum.innerHTML = 'JS Question <span id="questionNum">'+ 1 + '</span>';
   // questionSection.appendChild(questionNum);
   // document.body.appendChild(questionSection); 
-  // var jsQuestion = document.createElement('p');
-  // jsQuestion.setAttribute('id', 'jsQuestion');
-  // jsQuestion.textContent = quiz[0].Q
+  // var questionText = document.createElement('p');
+  // questionText.setAttribute('id', 'questionText');
+  // questionText.textContent = quiz[0].Q
   
-  // questionSection.appendChild(jsQuestion);
+  // questionSection.appendChild(questionText);
   // create and insert options buttons
   // var options = document.createElement('div');
   // options.setAttribute('id', 'options');
@@ -402,18 +402,18 @@ function makeQuestionList() {
 function iterateQuizItems() {
   for (i=0; i < quiz.length; i++) {
     var questionSection = document.createElement('section');
-    questionSection.setAttribute('id', 'questions');
+    questionSection.setAttribute('class', 'questions d-block');
     var j=i+1;
     var questionNum = document.createElement('h2');
-    questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j +'</span>';
+    questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
     questionSection.appendChild(questionNum);
     document.body.appendChild(questionSection); 
-    var jsQuestion = document.createElement('p');
-    jsQuestion.setAttribute('id', 'jsQuestion');
-    jsQuestion.textContent = quiz[i].Q
-    questionSection.appendChild(jsQuestion);
+    var questionText = document.createElement('p');
+    questionText.setAttribute('class', 'questionText');
+    questionText.textContent = quiz[i].Q
+    questionSection.appendChild(questionText);
     var options = document.createElement('div');
-    options.setAttribute('id', 'options');
+    options.setAttribute('class', 'options');
     questionSection.appendChild(options);
     var answers = quiz[i].answers;
     for (k=0; k < answers.length; k++) {
@@ -426,15 +426,34 @@ function iterateQuizItems() {
       optionButton.textContent = answers[k].text;
       options.appendChild(optionButton);
     }
+    console.log(questionSection);
   }
 }
-function hello() {
-  
-};
+// function showOnlyCurrentQuestion() {
+//   var oneElement = document.getElementsByClassName('questions');
+//   oneElement[1].setAttribute('class','d-none');
+// }
+
+// showOnlyCurrentQuestion();
 
 
+// https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
+var count=10;
+var counter=setInterval(ticktock, 1000); //1000 will  run it every 1 second
 
-
+function ticktock() {
+  var timer = document.getElementById('time-left')
+  timer.innerHTML = count;
+  count=count-1;
+  if (count <= -1) {
+     clearInterval(counter);
+     //counter ended, do something here
+     return;
+    }
+    var score = count;
+    console.log(score);
+}
+ticktock();
 
 
 /*
@@ -446,7 +465,7 @@ function hello() {
   shuffleArray(quiz);
   makeQuestionList();
   iterateQuizItems();
-  console.log(quiz);
+  // console.log(quiz);
 
 // showQuestion();
 // shuffleArray(quiz);

@@ -143,3 +143,10 @@ input:focus::placeholder {
 .hsEntry:last-child {
   border-bottom: none;
 }
+/* classes for JS functions */
+.d-block {
+  display: block;
+}
+.d-none {
+  display: none;
+}
