@@ -60,12 +60,12 @@ main section {
   margin-bottom: 50px;
 }
 /* questions */
-#result {
+.result {
   padding: 20px;
   background-color: var(--background);
   border-radius: var(--border-radius);
 }
-#result h3, #result p{
+.result h3, .result p{
   color: var(--lighterBodyText);
 
 }
@@ -86,15 +86,16 @@ main section {
 /* buttons */
 button {
   width: 200px;
-  height: 50px;
+  height: 75px;
   text-align: center;
   padding: auto;
   margin: 0 10px 20px;
-  font-size: 16px;
+  font-size: 18px;
   color: #ffffff;
   background-image: linear-gradient(to  right,#00487a, #175a88, #00487a);
   border: 0;
   border-radius: var(--border-radius);
+  line-height: 1.5;
   /* transition: all ease-in-out .25s; */
 }
 button:hover, button:active, button:focus {
@@ -102,7 +103,7 @@ button:hover, button:active, button:focus {
   /* transition: all  .25s; */
 }
 button[data-correct] {
-  width: 400px;
+  width: 450px;
 }
 input {
   width: 10;

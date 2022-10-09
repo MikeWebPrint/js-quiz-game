@@ -1,6 +1,228 @@
+/*
+  *************************
+ * questions
+ * ************************
+ */
+// array of objects
+// each object has question: "string"
+// each object has answers
+// each answer is an object - key: 1
+// data-isTrue: boolean
+// text of answer - string
+
+var Q1 = {
+  "Q": "JavaScript is the programming language of the _____.",
+  "answers": [{
+      "text": "Desktop",
+      "isCorrect": false
+    },
+    {
+      "text": "Mobile",
+      "isCorrect": false
+    },
+    {
+      "text": "Web",
+      "isCorrect": true
+    },
+    {
+      "text": "Server",
+      "isCorrect": false
+    }],
+  "explanation": "JavaScript is the programming language of the web."
+}
+var Q2 = {
+  "Q": "Which type of language is JavaScript?" ,
+  "answers": [{
+    "text": "Object-oriented",
+    "isCorrect":false
+  } ,
+  {
+    "text": "Object-based",
+    "isCorrect": true
+  } ,
+  {
+    "text": "Functional programming",
+    "isCorrect":false
+  } ,
+  {
+    "text": "All of the above",
+    "isCorrect":false
+  }], 
+  "explanation": "JavaScript is an object-oriented based programming language."
+}
+var Q3 = {
+  "Q": "Which of the following statement(s) is true about the JavaScript?" ,
+  "answers": [{
+    "text": "It is a scripting language used to make the website interactive",
+    "isCorrect":true
+  } ,
+  {
+    "text": "It is an advanced version of Java for Desktop and Mobile application development",
+    "isCorrect":false
+  } ,
+  {
+    "text": "It is a markup language of Java to develop the webpages",
+    "isCorrect":false
+  } ,
+  {
+    "text": "All of the above",
+    "isCorrect":false
+  }], 
+  "explanation": "Javascript is a scripting language used to make the website interactive"
+}
+var Q4 = {
+  "Q": "In which HTML element do we put the JavaScript code?" ,
+  "answers": [{
+    "text": "<javascript>...</javascript>",
+    "isCorrect":false
+  } ,
+  {
+    "text": "<js>...</js>",
+    "isCorrect":false
+  } ,
+  {
+    "text": "<script>...</script>",
+    "isCorrect":true
+  } ,
+  {
+    "text": "<css>...</css>",
+    "isCorrect":false
+  }], 
+  "explanation": "The JavaScript code is written inside the <script>...</script> tag/element."
+}
+var Q5 = {
+  "Q": "JavaScript code can be written in ____." ,
+  "answers": [{
+    "text": "JavaScript file (.js file)",
+    "isCorrect":false
+  } ,
+  {
+    "text": "HTML document directly",
+    "isCorrect":false
+  } ,
+  {
+    "text": "JavaScript file and in HTML document directly",
+    "isCorrect":true
+  } ,
+  {
+    "text": "In style sheets (.css file)",
+    "isCorrect":false
+  }], 
+  "explanation": "JavaScript code can be written in the JavaScript file and in HTML document directly."
+}
+var Q6 = {
+  "Q": "Which symbol is used separate JavaScript statements?" ,
+  "answers": [{
+    "text": "Comma (,)",
+    "isCorrect":false
+  } ,
+  {
+    "text": "Colon (:)",
+    "isCorrect":false
+  } ,
+  {
+    "text": "Hyphen (-)",
+    "isCorrect":false
+  } ,
+  {
+    "text": "Semicolon (;)",
+    "isCorrect":true
+  }], 
+  "explanation": "The semicolon (;) is used to separate the JavaScript statements."
+}
+var Q7 = {
+  "Q": "JavaScript ignores _____?" ,
+  "answers": [{
+    "text": "newlines",
+    "isCorrect":false
+  } ,
+  {
+    "text": "tabs",
+    "isCorrect":false
+  } ,
+  {
+    "text": "spaces",
+    "isCorrect":false
+  } ,
+  {
+    "text": "All of the above",
+    "isCorrect":true
+  }], 
+  "explanation": "JavaScript ignores spaces, tabs, and newlines written in the code, we can use them for the alignment and separate the sections to give a perfect look at our code."
+}
+var Q8 = {
+  "Q": "Which is the correct syntax to call an external JavaScript file in the current HTML document?" ,
+  "answers": [{
+    "text": "<script src='jsfile.js'></script>",
+    "isCorrect":true
+  } ,
+  {
+    "text": "<script href='jsfile.js'></script>",
+    "isCorrect":false
+  } ,
+  {
+    "text": "<import src='jsfile.js'></import>",
+    "isCorrect":false
+  } ,
+  {
+    "text": "<script link='jsfile.js'></script>",
+    "isCorrect":false
+  }], 
+  "explanation": "The correct syntax to call an external JavaScript file in the current HTML document is: <script src='jsfile.js'></script>"
+}
+var Q9 = {
+  "Q": "Which JavaScript method is used to access an HTML element by id?" ,
+  "answers": [{
+    "text": "getElementById()",
+    "isCorrect":false
+  } ,
+  {
+    "text": "getElement(id)",
+    "isCorrect":false
+  } ,
+  {
+    "text": "getElementById(id)",
+    "isCorrect":true
+  } ,
+  {
+    "text": "elementById(id)",
+    "isCorrect":false
+  }], 
+  "explanation": "The JavaScript method document.getElementById(id) is used to access an HTML document by id."
+}
+var Q10 = {
+  "Q": "Which property is used to define the HTML content to an HTML element with a specific id?" ,
+  "answers": [{
+    "text": "innerText",
+    "isCorrect":false
+  } ,
+  {
+    "text": "innerContent",
+    "isCorrect":false
+  } ,
+  {
+    "text": "elementText",
+    "isCorrect":false
+  } ,
+  {
+    "text": "innerHTML",
+    "isCorrect":true
+  }], 
+  "explanation": "The innerHTML is the property that defined HTML content. Example: document.getElementById('notif').innerHTML = 'New course launched';"
+}
+// JS questions from 
+// https://www.includehelp.com/mcq/javascript-multiple-choice-questions-mcqs.aspx
+let quiz = [Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10];
+
+
+/*
+  *************************
+ * garbage
+ * ************************
+ */
 // init
 // set score - define variable and set in localStorage
-var score = 0;
+// var score = 0;
 
 // get score - retrieve from localStorage and update variable, display to page
 // high scores - array of objects containing score and initials
@@ -43,6 +265,11 @@ var score = 0;
 // while (i > 0) {
 // time -= t
 // }
+/*
+  *************************
+ * DOM elements and functions
+ * ************************
+ */
 function showHighScores() {
   hideHeader();
   // create and insert high scores section
@@ -93,22 +320,27 @@ function showDone() {
   done.appendChild(enterScore);
   document.body.appendChild(done);
 }
+
 function showQuestion() {
   // create and insert question and options section
-  var questionSection = document.createElement('section');
-  questionSection.setAttribute('id', 'questions');
-  var questionNum = document.createElement('h2');
-  questionNum.innerHTML = 'JS Question <span id="questionNum">1</span>';
-  questionSection.appendChild(questionNum);
-  document.body.appendChild(questionSection); 
-  var jsQuestion = document.createElement('p');
-  jsQuestion.setAttribute('id', 'jsQuestion');
-  jsQuestion.textContent = 'Here is the text of your question.'
-  questionSection.appendChild(jsQuestion);
+  // var questionSection = document.createElement('section');
+  // questionSection.setAttribute('id', 'questions');
+  // var questionNum = document.createElement('h2');
+
+
+
+  // questionNum.innerHTML = 'JS Question <span id="questionNum">'+ 1 + '</span>';
+  // questionSection.appendChild(questionNum);
+  // document.body.appendChild(questionSection); 
+  // var jsQuestion = document.createElement('p');
+  // jsQuestion.setAttribute('id', 'jsQuestion');
+  // jsQuestion.textContent = quiz[0].Q
+  
+  // questionSection.appendChild(jsQuestion);
   // create and insert options buttons
-  var options = document.createElement('div');
-  options.setAttribute('id', 'options');
-  questionSection.appendChild(options);
+  // var options = document.createElement('div');
+  // options.setAttribute('id', 'options');
+  // questionSection.appendChild(options);
   var optionButton = document.createElement('button');
   optionButton.setAttribute('id', 'opt-btn-1');
   optionButton.setAttribute('data-correct', true);
@@ -133,7 +365,6 @@ function showQuestion() {
   optionButton.innerHTML = 'Here is an incorrect answer';
   options.appendChild(optionButton);
 
-  // console.log(questionSection.innerHTML);
   var hr = document.createElement('hr');
   questionSection.appendChild(hr);
 
@@ -148,9 +379,80 @@ function showExplanation() {
   var questionSection = document.querySelector('#questions');
   questionSection.appendChild(explanation);
 }
+/*
+  *************************
+ * question data manipulation
+ * ************************
+ */
+// var questionList = quiz.sort((Math.random()-0.5));
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffleArray(array) {
+  array.slice(0);
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  } 
+}
+function makeQuestionList() {
+  quiz.splice(0,5);
+}
+
+function iterateQuizItems() {
+  for (i=0; i < quiz.length; i++) {
+    var questionSection = document.createElement('section');
+    questionSection.setAttribute('id', 'questions');
+    var j=i+1;
+    var questionNum = document.createElement('h2');
+    questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j +'</span>';
+    questionSection.appendChild(questionNum);
+    document.body.appendChild(questionSection); 
+    var jsQuestion = document.createElement('p');
+    jsQuestion.setAttribute('id', 'jsQuestion');
+    jsQuestion.textContent = quiz[i].Q
+    questionSection.appendChild(jsQuestion);
+    var options = document.createElement('div');
+    options.setAttribute('id', 'options');
+    questionSection.appendChild(options);
+    var answers = quiz[i].answers;
+    for (k=0; k < answers.length; k++) {
+      var optionButton = document.createElement('button');
+      if (answers[k].isCorrect===true) {
+      optionButton.setAttribute('data-correct', true);
+      } else {
+        optionButton.setAttribute('data-correct', false);
+      }
+      optionButton.textContent = answers[k].text;
+      options.appendChild(optionButton);
+    }
+  }
+}
+function hello() {
+  
+};
+
+
+
+
+
+
+/*
+  *************************
+ * triggers
+ * ************************
+ */
+  // hideIntro();
+  shuffleArray(quiz);
+  makeQuestionList();
+  iterateQuizItems();
+  console.log(quiz);
 
 // showQuestion();
+// shuffleArray(quiz);
+// makeQuestionList();
+
 // showExplanation();
 // showHighScores();
 // hideIntro();
-// showDone();
+showDone()
