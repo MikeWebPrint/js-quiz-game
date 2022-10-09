@@ -239,6 +239,7 @@ function iterateQuizItems() {
     var answers = quiz[i].answers;
     for (k=0; k < answers.length; k++) {
       var optionButton = document.createElement('button');
+      // optionButton.setAttribute('class', 'btn');
       if (answers[k].isCorrect===true) {
       optionButton.setAttribute('data-correct', true);
       } else {
@@ -252,15 +253,63 @@ function iterateQuizItems() {
     // console.log(questionSection);
   }
 }
-function currentQuestion() {
-  var questions = document.getElementsByClassName('questions d-none');
-  console.log(Array.from(questions)[0])
-  // questions[0].removeAttribute('class');
-  // questions[0].setAttribute('class','questions d-block');
-  // console.log(questions);
+function iterateQuestion() {
+  let i=0;
+  var questionSection = document.createElement('section');
+  questionSection.setAttribute('class', 'questions d-block');
+  var j=i+1;
+  var questionNum = document.createElement('h2');
+  questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
+  questionSection.appendChild(questionNum);
+  document.body.appendChild(questionSection); 
+  var questionText = document.createElement('p');
+  questionText.setAttribute('class', 'questionText');
+  questionText.textContent = quiz[i].Q
+  questionSection.appendChild(questionText);
+  var options = document.createElement('div');
+  options.setAttribute('id', 'options');
+  questionSection.appendChild(options);
+  var answers = quiz[i].answers;
+  for (k=0; k < answers.length; k++) {
+    var isCorrect = function() {
+      var correct = this.getAttribute("data-correct");
+      alert(correct);
+    // TODO: put function here to swap to next question
+
+  };
+      var optionButton = document.createElement('button');
+    optionButton.setAttribute('class', 'btn');
+    optionButton.addEventListener('click', isCorrect, false);
+    if (answers[k].isCorrect===true) {
+    optionButton.setAttribute('data-correct', true);
+    } else {
+      optionButton.setAttribute('data-correct', false);
+    }
+    optionButton.textContent = answers[k].text;
+    options.appendChild(optionButton);
+  }
+  var hr = document.createElement('hr');
+  questionSection.appendChild(hr);
+  // selectAnswer();
+  // thanks to:
+  // https://www.codegrepper.com/code-examples/javascript/get+element+by+class+add+event+listener
 }
+
+
+
+
+// function currentQuestion() {
+//   var questions = document.getElementsByClassName('questions d-none');
+//   console.log(Array.from(questions)[0])
+//   // questions[0].removeAttribute('class');
+//   // questions[0].setAttribute('class','questions d-block');
+//   // console.log(questions);
+// }
 // showOnlyCurrentQuestion()
 // console.log(document.getElementsByClassName('questions'))
+
+
+
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
 function ticktock() {
@@ -316,13 +365,14 @@ function clear() {
 }
 
 
-function startGame () {
+function startGame() {
   hideIntro();
   // stopGameButton();
   // ticktock();
   shuffleArray(quiz);
   makeQuestionList();
-  iterateQuizItems();
+  iterateQuestion();
+  // iterateQuizItems();
   if (document.getElementById('done')){
     hideIntro();
   }
@@ -337,6 +387,7 @@ start.addEventListener('click', startGame);
 * triggers
 * ************************
 */
+startGame()
 // ticktock();
 // hideIntro();
   // getScore();
