@@ -270,7 +270,9 @@ let quiz = [Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10];
  * DOM elements and functions
  * ************************
  */
-function showHighScores() {
+function showHighScores(e) {
+  e.preventDefault();
+  hideIntro();
   hideHeader();
   // create and insert high scores section
   var highScoresPage = document.createElement('section');
@@ -301,23 +303,32 @@ function showHighScores() {
   scoreButtons.appendChild(backButton);
   scoreButtons.appendChild(clearButton);
   highScoresPage.appendChild(scoreButtons);
+  document.getElementById('Back').addEventListener('click', reload)
+}
+function reload() {
+  location.reload();
 }
 function hideHeader() {
   var header = document.getElementById('header');
   header.remove();
 }
+var viewScores = document.getElementById('viewScores');
+viewScores.addEventListener('click', showHighScores);
 function hideIntro() {
   var intro = document.getElementById('intro');
   intro.remove();
 }
+// var score =42;
+
 function showDone() {
   // create and insert Done message and form section
   var done = document.createElement('section');
   done.setAttribute('id', 'done');
-  done.innerHTML = '<h2>All done!</h2><h3>Your final score is: <span id="score">'+ 'score ' + '</span></h3>';
-  var enterScore = document.createElement('form');
-  enterScore.innerHTML = '<label for="initials">Enter your initials</label>\n<input type="text" name="initials" placeholder="ABC">';
-  done.appendChild(enterScore);
+  done.innerHTML = '<h2>All done!</h2><h3>Your final score is: <span id="score">'+ score + '</span></h3>';
+  var scoreForm = document.createElement('form');
+  scoreForm.setAttribute('id', 'scoreForm')
+  scoreForm.innerHTML = '<label for="initials">Enter your initials</label>\n<input id="initials" type="text" name="initials" placeholder="ABC">\n<button type="submit">Submit</button>';
+  done.appendChild(scoreForm);
   document.body.appendChild(done);
 }
 
@@ -369,8 +380,6 @@ function showQuestion() {
   questionSection.appendChild(hr);
 
   showExplanation();
-
-
 }
 function showExplanation() {
   var explanation = document.createElement('div');
@@ -426,7 +435,9 @@ function iterateQuizItems() {
       optionButton.textContent = answers[k].text;
       options.appendChild(optionButton);
     }
-    console.log(questionSection);
+    var hr = document.createElement('hr');
+    questionSection.appendChild(hr);
+    // console.log(questionSection);
   }
 }
 // function showOnlyCurrentQuestion() {
@@ -438,33 +449,56 @@ function iterateQuizItems() {
 
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
-var count=10;
-var counter=setInterval(ticktock, 1000); //1000 will  run it every 1 second
 
+var count=10;
 function ticktock() {
+  var start = document.getElementById('start-btn');
+  var counter=setInterval(ticktock, 1000); //1000 will  run it every 1 second
+  start.addEventListener('click', this.counter);
   var timer = document.getElementById('time-left')
-  timer.innerHTML = count;
+  timer.innerHTML = 'Time: ' + count;
   count=count-1;
   if (count <= -1) {
      clearInterval(counter);
      //counter ended, do something here
+     setScore(counter-1)
      return;
     }
-    var score = count;
-    console.log(score);
+    // console.log(score);
 }
-ticktock();
 
+/************************
+* scoring
+***********************/
+hideIntro()
+showDone()
+function getScore() {
+  var score = localStorage.getItem('score');
+  console.log('score is '+ score);
+}
+var score = 36;
+var scoreForm = document.getElementById('scoreForm');
+var enterInitials = document.getElementById('initials')
+scoreForm.addEventListener('submit', setScore);
+
+function setScore(e) {
+  e.preventDefault();
+  console.log(initials.value);
+  // var gameScore = 
+}
 
 /*
-  *************************
- * triggers
- * ************************
- */
-  // hideIntro();
-  shuffleArray(quiz);
-  makeQuestionList();
-  iterateQuizItems();
+*************************
+* triggers
+* ************************
+*/
+// ticktock();
+// hideIntro();
+  // getScore();
+  // setScore(score);
+  // shuffleArray(quiz);
+  // makeQuestionList();
+  // iterateQuizItems();
   // console.log(quiz);
 
 // showQuestion();
@@ -474,4 +508,4 @@ ticktock();
 // showExplanation();
 // showHighScores();
 // hideIntro();
-showDone()
+  // showDone()
