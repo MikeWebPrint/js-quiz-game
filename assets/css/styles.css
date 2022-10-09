@@ -111,6 +111,7 @@ input {
   font-size: 16px;
   color: inherit;
   text-align: center;
+  text-transform: uppercase;
   /* outline: 1px solid var(--background); */
   /* border-radius: var(--border-radius); */
 }

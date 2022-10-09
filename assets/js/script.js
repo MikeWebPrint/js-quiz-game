@@ -274,7 +274,9 @@ function showHighScores(e) {
   e.preventDefault();
   hideIntro();
   hideHeader();
-  hideDone();
+  if (document.getElementById('done')){
+    hideDone()
+  };
   // getScore();
   // create and insert high scores section
   var highScoresPage = document.createElement('section');
@@ -287,11 +289,8 @@ function showHighScores(e) {
   var highScoresList = document.createElement('div');
   console.log('testing' + score);
   var scores = JSON.parse(localStorage.getItem('scores'));
-  // scores.sort(function(a,b){
-  //   return b.score - a.score;
-  // })
-  // scores.splice(5);
-// console.log(scores);
+
+console.log(scores);
   highScoresList.setAttribute('id', 'highScoresList');
   highScoresPage.appendChild(highScoresList);
 
@@ -341,19 +340,34 @@ function hideIntro() {
   var intro = document.getElementById('intro');
   intro.remove();
 }
-// var score =42;
+// var score = 42;
 
-function showDone() {
+function showDone(counter) {
   // create and insert Done message and form section
   var done = document.createElement('section');
   done.setAttribute('id', 'done');
-  done.innerHTML = '<h2>All done!</h2><h3>Your final score is: <span id="score">'+ score + '</span></h3>';
+  done.innerHTML = '<h2>All done!</h2>';
   var scoreForm = document.createElement('form');
-  scoreForm.setAttribute('id', 'scoreForm')
-  scoreForm.innerHTML = '<label for="initials">Enter your initials</label>\n<input id="initials" type="text" name="initials" placeholder="ABC">\n<button type="submit">Submit</button>';
+  scoreForm.setAttribute('id', 'scoreForm');
+  scoreForm.innerHTML = '<h3>Your final score is: <span id="score">'+ counter + '</span></h3><label for="initials">Enter your initials</label>\n<input id="initials" type="text" name="initials" maxlength="3" placeholder="ABC"></input>\n<button type="submit">Submit</button>';
   done.appendChild(scoreForm);
   document.body.appendChild(done);
+  var score = document.getElementById('score').textContent;
+  var user = document.getElementById('initials').value.trim().toUpperCase();
+  scoreForm.addEventListener('submit', function(e) {
+    // if (user===""){
+    //   alert('enter something');
+    //   } else{
+      e.preventDefault();
+      console.log(score);
+      console.log(user);
+      setScore(user, score);
+    
+  });
 }
+
+
+
 
 function showQuestion() {
   // create and insert question and options section
@@ -463,65 +477,82 @@ function iterateQuizItems() {
     // console.log(questionSection);
   }
 }
-// function showOnlyCurrentQuestion() {
-//   var oneElement = document.getElementsByClassName('questions');
-//   oneElement[1].setAttribute('class','d-none');
-// }
-
-// showOnlyCurrentQuestion();
-
+function showOnlyCurrentQuestion() {
+  var currentQuestion = document.getElementsByClassName('questions');
+  currentQuestion[1].removeAttribute('class');
+  currentQuestion[1].setAttribute('class','questions d-none');
+  console.log(currentQuestion);
+}
+// showOnlyCurrentQuestion()
+// console.log(document.getElementsByClassName('questions'))
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
 
-var count=10;
+// var count=5;
 function ticktock() {
-  var start = document.getElementById('start-btn');
-  var counter=setInterval(ticktock, 1000); //1000 will  run it every 1 second
-  start.addEventListener('click', this.counter);
-  var timer = document.getElementById('time-left')
-  timer.innerHTML = 'Time: ' + count;
-  count=count-1;
-  if (count <= -1) {
-     clearInterval(counter);
-     //counter ended, do something here
-     setScore(counter-1)
-     return;
+
+  var counter = 5;
+  var timer = setInterval(function(){
+    // console.log(counter);
+    var timeLeft = document.getElementById('time-left')
+    counter--
+    timeLeft.innerHTML = 'Time: ' + counter;
+    if (counter === 0) {
+      clearInterval(timer);
+      showDone(counter);
     }
+  }, 1000);
+
+
+
+
+
+
+
+  // var timer = document.getElementById('time-left')
+  // timer.innerHTML = 'Time: ' + count;
+  // if (count <= 0) {
+  //   clearInterval(counter);
+  //   //counter ended, do something here
+  //   //  setScore(counter-1) // TODO set counter to score
+  //   return;
+  // }  
+  // count--;
+  // return count;
     // console.log(score);
 }
 
 /************************
 * scoring
 ***********************/
-var score = 1112;
+// var score = 1112;
 // hideIntro()
-showDone()
 function getScore() {
   var scores = localStorage.getItem('scores');
-  // console.log('score is '+ score);
   return scores;
 }
-var scoreForm = document.getElementById('scoreForm');
-var enterInitials = document.getElementById('initials')
-scoreForm.addEventListener('submit', setScore);
 
-function setScore(e) {
-  e.preventDefault();
+function setScore(user, score) {
+  // var scoreForm = document.getElementById('scoreForm');
+  // var initials = document.getElementById('initials')
+  // var score = document.getElementById('score').textContent;
+  // scoreForm.addEventListener('submit', setScore);
+  // e.preventDefault();
   getScore();
-  if (getScore()!= null){
-    var highScores = JSON.parse(localStorage.getItem('scores'));
-  } else {
+  if (getScore() === null){
     var highScores =[];
+  } else {
+    var highScores = JSON.parse(localStorage.getItem('scores'));
+
   }
-  var user = initials.value;
-  var user = user.trim().toUpperCase().substring(0, 3);
+  // var user = initials.value;
+  // var user = user.trim();
   highScores.push({user, score})
   highScores.sort(function(a,b){
     return b.score - a.score;
   })
   highScores.splice(5);
   localStorage.setItem('scores', JSON.stringify(highScores))
-  // var gameScore = 
 
 
 
@@ -531,6 +562,8 @@ function setScore(e) {
 }
 function clear() {
   localStorage.clear();
+  // reload();
+  // showHighScores();
 }
 
 
@@ -540,9 +573,22 @@ function clear() {
 // function reload() {
 //   location.reload();
 // }
+function startGame () {
+  // var counter=setInterval(ticktock, 1000); //1000 will  run it every 1 second
+  hideIntro();
+  ticktock();
+  shuffleArray(quiz);
+  makeQuestionList();
+  iterateQuizItems();
+  if (document.getElementById('done')){
+    hideIntro();
+  }
+}
+var start = document.getElementById('start-btn');
+start.addEventListener('click', startGame);
 
-
-
+// hideIntro();
+// showDone()
 /*
 *************************
 * triggers
@@ -552,16 +598,18 @@ function clear() {
 // hideIntro();
   // getScore();
   // setScore(score);
-  shuffleArray(quiz);
-  makeQuestionList();
-  iterateQuizItems();
+  // shuffleArray(quiz);
+  // makeQuestionList();
+  // iterateQuizItems();
   // console.log(quiz);
-
-// showQuestion();
+  
+  // showQuestion();
+  // showDone()
 // shuffleArray(quiz);
 // makeQuestionList();
 
 // showExplanation();
 // showHighScores();
 // hideIntro();
-  // showDone()
+
+// showOnlyCurrentQuestion();
