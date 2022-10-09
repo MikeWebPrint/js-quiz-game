@@ -274,6 +274,8 @@ function showHighScores(e) {
   e.preventDefault();
   hideIntro();
   hideHeader();
+  hideDone();
+  // getScore();
   // create and insert high scores section
   var highScoresPage = document.createElement('section');
   highScoresPage.setAttribute('id', 'highScoresPage');
@@ -283,15 +285,33 @@ function showHighScores(e) {
   highScoresPage.appendChild(highScoresTitle);
   // create and insert scores list into scores section
   var highScoresList = document.createElement('div');
+  console.log('testing' + score);
+  var scores = JSON.parse(localStorage.getItem('scores'));
+  // scores.sort(function(a,b){
+  //   return b.score - a.score;
+  // })
+  // scores.splice(5);
+// console.log(scores);
   highScoresList.setAttribute('id', 'highScoresList');
   highScoresPage.appendChild(highScoresList);
-  var hsEntry = document.createElement('div');
-  hsEntry.setAttribute('class', 'hsEntry')
-  var hsPosition = '1. ';
-  var hsInitials = 'MDJ';
-  var hsScore = '20';
-  hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
-  highScoresList.appendChild(hsEntry);
+
+  if (scores != null){
+    for (let i=0; i<scores.length; i++){
+      var hsEntry = document.createElement('div');
+      hsEntry.setAttribute('class', 'hsEntry')
+      var j = i + 1;
+      hsEntry.innerHTML = j +'. ' + scores[i].user +' ' +scores[i].score;
+      highScoresList.appendChild(hsEntry);
+    }
+  }
+  
+  // var hsPosition = '1. ';
+  // var hsInitials = scores.user;
+  // var hsScore = scores.score;
+  // hsEntry.innerHTML = hsPosition + hsInitials + ' - ' + hsScore;
+
+
+
   // create and insert buttons into scores section
   var scoreButtons = document.createElement('div');
   var backButton = document.createElement('button');
@@ -304,13 +324,16 @@ function showHighScores(e) {
   scoreButtons.appendChild(clearButton);
   highScoresPage.appendChild(scoreButtons);
   document.getElementById('Back').addEventListener('click', reload)
+  document.getElementById('clearHighScores').addEventListener('click', clear);
 }
 function reload() {
   location.reload();
 }
 function hideHeader() {
-  var header = document.getElementById('header');
-  header.remove();
+  document.getElementById('header').remove();
+}
+function hideDone() {
+  document.getElementById('done').remove();
 }
 var viewScores = document.getElementById('viewScores');
 viewScores.addEventListener('click', showHighScores);
@@ -470,22 +493,55 @@ function ticktock() {
 /************************
 * scoring
 ***********************/
-hideIntro()
+var score = 1112;
+// hideIntro()
 showDone()
 function getScore() {
-  var score = localStorage.getItem('score');
-  console.log('score is '+ score);
+  var scores = localStorage.getItem('scores');
+  // console.log('score is '+ score);
+  return scores;
 }
-var score = 36;
 var scoreForm = document.getElementById('scoreForm');
 var enterInitials = document.getElementById('initials')
 scoreForm.addEventListener('submit', setScore);
 
 function setScore(e) {
   e.preventDefault();
-  console.log(initials.value);
+  getScore();
+  if (getScore()!= null){
+    var highScores = JSON.parse(localStorage.getItem('scores'));
+  } else {
+    var highScores =[];
+  }
+  var user = initials.value;
+  var user = user.trim().toUpperCase().substring(0, 3);
+  highScores.push({user, score})
+  highScores.sort(function(a,b){
+    return b.score - a.score;
+  })
+  highScores.splice(5);
+  localStorage.setItem('scores', JSON.stringify(highScores))
   // var gameScore = 
+
+
+
+
+
+
 }
+function clear() {
+  localStorage.clear();
+}
+
+
+
+// document.getElementById('Back').addEventListener('click', reload)
+// }
+// function reload() {
+//   location.reload();
+// }
+
+
 
 /*
 *************************
@@ -496,9 +552,9 @@ function setScore(e) {
 // hideIntro();
   // getScore();
   // setScore(score);
-  // shuffleArray(quiz);
-  // makeQuestionList();
-  // iterateQuizItems();
+  shuffleArray(quiz);
+  makeQuestionList();
+  iterateQuizItems();
   // console.log(quiz);
 
 // showQuestion();
