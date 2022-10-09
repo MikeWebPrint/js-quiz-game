@@ -96,11 +96,11 @@ button {
   border: 0;
   border-radius: var(--border-radius);
   line-height: 1.5;
-  /* transition: all ease-in-out .25s; */
+  transition: all ease-in-out .25s;
 }
 button:hover, button:active, button:focus {
   background-image: linear-gradient(to right, #005699,#186da8, #005699);
-  /* transition: all  .25s; */
+  transition: all  .25s;
 }
 button[data-correct] {
   width: 450px;
