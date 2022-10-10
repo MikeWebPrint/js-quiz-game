@@ -118,6 +118,11 @@ function showHighScores(e) {
   if (document.getElementById('done')){
     hideDone()
   };
+  if (document.getElementsByClassName('options')){
+    hideQuestion();
+  }
+
+
   // create and insert high scores section
   var highScoresPage = document.createElement('section');
   highScoresPage.setAttribute('id', 'highScoresPage');
@@ -166,6 +171,10 @@ function hideHeader() {
 function hideDone() {
   document.getElementById('done').remove();
 }
+function hideQuestion(){
+  var question = document.getElementsByClassName('questions d-block')
+  question[0].remove();
+  }
 var viewScores = document.getElementById('viewScores');
 viewScores.addEventListener('click', showHighScores);
 function hideIntro() {
@@ -220,39 +229,39 @@ function makeQuestionList() {
   quiz.splice(0,5);
 }
 
-function iterateQuizItems() {
-  for (i=0; i < quiz.length; i++) {
-    var questionSection = document.createElement('section');
-    questionSection.setAttribute('class', 'questions d-block');
-    var j=i+1;
-    var questionNum = document.createElement('h2');
-    questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
-    questionSection.appendChild(questionNum);
-    document.body.appendChild(questionSection); 
-    var questionText = document.createElement('p');
-    questionText.setAttribute('class', 'questionText');
-    questionText.textContent = quiz[i].Q
-    questionSection.appendChild(questionText);
-    var options = document.createElement('div');
-    options.setAttribute('class', 'options');
-    questionSection.appendChild(options);
-    var answers = quiz[i].answers;
-    for (k=0; k < answers.length; k++) {
-      var optionButton = document.createElement('button');
-      // optionButton.setAttribute('class', 'btn');
-      if (answers[k].isCorrect===true) {
-      optionButton.setAttribute('data-correct', true);
-      } else {
-        optionButton.setAttribute('data-correct', false);
-      }
-      optionButton.textContent = answers[k].text;
-      options.appendChild(optionButton);
-    }
-    var hr = document.createElement('hr');
-    questionSection.appendChild(hr);
-    // console.log(questionSection);
-  }
-}
+// function iterateQuizItems() {
+//   for (i=0; i < quiz.length; i++) {
+//     var questionSection = document.createElement('section');
+//     questionSection.setAttribute('class', 'questions d-block');
+//     var j=i+1;
+//     var questionNum = document.createElement('h2');
+//     questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
+//     questionSection.appendChild(questionNum);
+//     document.body.appendChild(questionSection); 
+//     var questionText = document.createElement('p');
+//     questionText.setAttribute('class', 'questionText');
+//     questionText.textContent = quiz[i].Q
+//     questionSection.appendChild(questionText);
+//     var options = document.createElement('div');
+//     options.setAttribute('class', 'options');
+//     questionSection.appendChild(options);
+//     var answers = quiz[i].answers;
+//     for (k=0; k < answers.length; k++) {
+//       var optionButton = document.createElement('button');
+//       // optionButton.setAttribute('class', 'btn');
+//       if (answers[k].isCorrect===true) {
+//       optionButton.setAttribute('data-correct', true);
+//       } else {
+//         optionButton.setAttribute('data-correct', false);
+//       }
+//       optionButton.textContent = answers[k].text;
+//       options.appendChild(optionButton);
+//     }
+//     var hr = document.createElement('hr');
+//     questionSection.appendChild(hr);
+//     // console.log(questionSection);
+//   }
+// }
 function iterateQuestion() {
   let i=0;
   var questionSection = document.createElement('section');
@@ -275,9 +284,9 @@ function iterateQuestion() {
       var correct = this.getAttribute("data-correct");
       alert(correct);
     // TODO: put function here to swap to next question
-
-  };
-      var optionButton = document.createElement('button');
+      i++;
+    };
+    var optionButton = document.createElement('button');
     optionButton.setAttribute('class', 'btn');
     optionButton.addEventListener('click', isCorrect, false);
     if (answers[k].isCorrect===true) {
@@ -368,7 +377,7 @@ function clear() {
 function startGame() {
   hideIntro();
   // stopGameButton();
-  // ticktock();
+  ticktock();
   shuffleArray(quiz);
   makeQuestionList();
   iterateQuestion();
@@ -387,7 +396,7 @@ start.addEventListener('click', startGame);
 * triggers
 * ************************
 */
-startGame()
+// startGame()
 // ticktock();
 // hideIntro();
   // getScore();
