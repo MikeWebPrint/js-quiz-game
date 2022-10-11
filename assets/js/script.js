@@ -182,9 +182,9 @@ function showDone(counter) {
   done.appendChild(scoreForm);
   document.body.appendChild(done);
   var score = document.getElementById('score').textContent;
-  var user = document.getElementById('initials').value.trim().toUpperCase();
+  // var user = document.getElementById('initials').value.trim().toUpperCase();
   // var user = document.getElementById('initials').value;
-  // var user = 'placeholder';
+  var user = 'placeholder';
   scoreForm.addEventListener('submit', function(e) {
       e.preventDefault();
       // console.log(user, score);
