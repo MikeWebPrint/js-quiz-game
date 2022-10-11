@@ -6,19 +6,15 @@
   --lighterBodyText: #707070;
   --background: #dedede;
   --lighterBackground: #f6f6f6;
-
   --border-radius: 3px;
-
 }
 /* add reset */
 * {
   margin: 0;
   box-sizing: border-box;
   font-family: sans-serif;
-
   scroll-behavior: smooth;  
 }
-
 /* add my global styles */
 h1, h2, h3, h4, h5, h6, p {
   margin-bottom: 1em;
@@ -48,8 +44,6 @@ body > * {
   margin-bottom: 10px;
   background-color: var(--lighterBackground);
 }
-
-
 /* header */
 header {
   display: flex;
@@ -112,13 +106,9 @@ input {
   color: inherit;
   text-align: center;
   text-transform: uppercase;
-  /* outline: 1px solid var(--background); */
-  /* border-radius: var(--border-radius); */
 }
 input:focus {
   background-color: #d9eeff;
-  /* box-shadow: inset 0 0 5px var(--background); */
-
 }
 input:focus::placeholder {
   color: transparent;
@@ -135,15 +125,11 @@ input:focus::placeholder {
   margin-bottom: 20px;
   outline: 1px solid var(--accentColor2);
   border-radius: var(--border-radius);
-  /* width: 100%; */
-  /* padding: 15px; */
 }
 .hsEntry {
   padding: 15px;
-  /* outline: solid red 1px; */
   background: #ffffff;
   border-bottom: dashed 1px var(--accentColor2)
-
 } 
 .hsEntry:nth-child(odd) {
   background: var(--background);
@@ -161,9 +147,11 @@ input:focus::placeholder {
 .expHidden {
   visibility: hidden;
   padding: 15px 0;
+  transition: visibility ease-in 1s;
 }
 .showExp {
     visibility: visible;
     color: var(--lighterBodyText);
     padding: 15px 0;
-  }
+    transition: visibility ease-in 1s;
+}

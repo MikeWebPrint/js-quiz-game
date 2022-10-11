@@ -1,14 +1,6 @@
-/*
-  *************************
+/**************************
  * questions
- * ************************
- */
-// array of objects
-// each object has question: "string"
-// each object has an array of answers
-// each answer is an object -
-// text of answer - string
-// data-isTrue: boolean
+ **************************/
 var Q1 = {
   "Q": "JavaScript is the programming language of the _____.",
   "answers": 
@@ -79,7 +71,7 @@ var Q8 = {
     {"text": "<script href='jsfile.js'></script>", "isCorrect":false} ,
     {"text": "<import src='jsfile.js'></import>", "isCorrect":false} ,
     {"text": "<script link='jsfile.js'></script>", "isCorrect":false}], 
-  "explanation": "The correct syntax to call an external JavaScript file in the current HTML document is: <script src='jsfile.js'></script>"
+  "explanation": "The correct syntax to call an external JavaScript file in the current HTML document is: &lt;script src='jsfile.js'&gt;&lt;/script\&gt;"
 }
 var Q9 = {
   "Q": "Which JavaScript method is used to access an HTML element by id?" ,
@@ -104,11 +96,9 @@ var Q10 = {
 let quiz = [Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10];
 
 
-/*
-  *************************
+/**************************
  * DOM elements and functions
- * ************************
- */
+ * *************************/
 function showHighScores(e) {
   e.preventDefault();
   if (document.getElementById('intro')) {
@@ -169,8 +159,10 @@ function hideDone() {
   document.getElementById('done').remove();
 }
 function hideQuestion(){
-  var question = document.getElementsByClassName('questions');
-  question[0].remove();
+  var question = document.querySelectorAll('.questions');
+  for (i=0; i < question.length; i++){
+    question[i].remove();
+    }
   }
 var viewScores = document.getElementById('viewScores');
 viewScores.addEventListener('click', showHighScores);
@@ -203,14 +195,18 @@ function showDone(counter) {
       // console.log(scoreForm);
   });
 }
-function showExplanation() {
+function showExplanation(e) {
   document.querySelector('.expHidden').setAttribute('class', 'showExp');
+  if (e.target.getAttribute('data-correct')===true){
+    var msg = 'Correct! - ';
+  } else {
+    var msg = 'Incorrect! - ';
+  }
+  
 }
-/*
-  *************************
+/**************************
  * question data manipulation
- * ************************
- */
+ **************************/
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffleArray(array) {
   array.slice(0);
@@ -244,27 +240,17 @@ function iterateQuizItems() {
     var answers = quiz[i].answers;
     for (k=0; k < answers.length; k++) {
       var optionButton = document.createElement('button');
-      // optionButton.setAttribute('class', 'btn');
       if (answers[k].isCorrect===true) {
-      optionButton.setAttribute('data-correct', true);
-      } else {
-        optionButton.setAttribute('data-correct', false);
+        optionButton.setAttribute('data-correct', true);
+        } else {
+          optionButton.setAttribute('data-correct', false);
       }
       optionButton.textContent = answers[k].text;
       options.appendChild(optionButton);
-
-
-
-      // var isCorrect = function() {
-      //   var correct = this.getAttribute("data-correct");
-      //   alert(correct);
-
-      // // TODO: put function here to swap to next question
-      //   i++;
-      // };
-
-
-
+      var message = document.createElement('div');
+      var isCorrect = optionButton.getAttribute('data-correct');
+      message.setAttribute('class', 'expHidden');
+      message.innerHTML = showExplanation + ' - ' + quiz[i].explanation;
       optionButton.addEventListener('click', showExplanation, true);
       var oneQuestion = function(){
         var questions = document.querySelectorAll('.questions');
@@ -289,21 +275,10 @@ function iterateQuizItems() {
         
         }
       }
-      var hr = document.createElement('hr');
-      questionSection.appendChild(hr);
-      var message = document.createElement('div');
-      var isCorrect = function() {
-        this.getAttribute("data-correct");
-        return 
-      }
-      message.setAttribute('class', 'expHidden');
-      message.innerHTML = isCorrect + ' ' + quiz[i].explanation;
       questionSection.appendChild(message);
       console.log(questionSection);
-      // oneQuestion();
-
-
-  
+        var hr = document.createElement('hr');
+        questionSection.appendChild(hr);
   }
 }
 
@@ -331,8 +306,7 @@ function iterateQuizItems() {
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
 function ticktock() {
-
-  var counter = 15;
+  var counter = 10;
   var timer = setInterval(function(){
     // console.log(counter);
     var timeLeft = document.getElementById('time-left')
@@ -340,19 +314,20 @@ function ticktock() {
     timeLeft.innerHTML = 'Time: ' + counter;
     if (counter === 0) {
       clearInterval(timer);
+      hideQuestion();
       showDone(counter);
     }
   }, 1000);
   // TODO set counter to score
 }
-// function stopGameButton() {
-//   var stopButton = document.createElement('button');
-//   stopButton.textContent = 'Stop Game';
-//   document.getElementsByTagName('header')[0].appendChild(stopButton);
-//   stopButton.addEventListener('click', function(){
-//     clearInterval(ticktock);
-//   });
-// }
+function stopGameButton() {
+  var stopButton = document.createElement('button');
+  stopButton.textContent = 'Stop Game';
+  document.getElementById('stop').appendChild(stopButton);
+  stopButton.addEventListener('click', function(){
+    clearInterval(ticktock);
+  });
+}
 
 /************************
 * scoring
@@ -361,14 +336,12 @@ function getScore() {
   var scores = localStorage.getItem('scores');
   return scores;
 }
-
 function setScore(user, score) {
   getScore();
   if (getScore() === null){
     var highScores =[];
   } else {
     var highScores = JSON.parse(localStorage.getItem('scores'));
-
   }
   highScores.push({user, score})
   highScores.sort(function(a,b){
@@ -377,6 +350,7 @@ function setScore(user, score) {
   highScores.splice(5);
   localStorage.setItem('scores', JSON.stringify(highScores))
 }
+// Utility functions
 function clear() {
   localStorage.clear();
   document.getElementById('highScoresList').remove();
@@ -384,12 +358,12 @@ function clear() {
 function disableViewHighScores() {
   document.getElementById('viewScores').style.visibility = 'hidden';
 }
-
+// startGame calls other utility functions
 function startGame() {
   hideIntro();
   disableViewHighScores();
   // stopGameButton();
-  // ticktock();
+  ticktock();
   shuffleArray(quiz);
   makeQuestionList();
   // iterateQuestion();
@@ -401,30 +375,27 @@ function startGame() {
 var start = document.getElementById('start-btn');
 start.addEventListener('click', startGame);
 
-// hideIntro();
-// showDone()
 /*
 *************************
-* triggers
+* triggers used in development and testing
 * ************************
 */
+// hideIntro();
+// showDone()
 // startGame()
 // ticktock();
 // hideIntro();
-  // getScore();
-  // setScore(score);
-  // shuffleArray(quiz);
-  // makeQuestionList();
-  // iterateQuizItems();
-  // console.log(quiz);
-  
-  // showQuestion();
-  // showDone()
+// getScore();
+// setScore(score);
 // shuffleArray(quiz);
 // makeQuestionList();
-
+// iterateQuizItems();
+// console.log(quiz);
+// showQuestion();
+// showDone()
+// shuffleArray(quiz);
+// makeQuestionList();
 // showExplanation();
 // showHighScores();
 // hideIntro();
-
 // showOnlyCurrentQuestion();
