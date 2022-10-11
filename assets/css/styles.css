@@ -158,3 +158,12 @@ input:focus::placeholder {
 .d-none {
   display: none;
 }
+.expHidden {
+  visibility: hidden;
+  padding: 15px 0;
+}
+.showExp {
+    visibility: visible;
+    color: var(--lighterBodyText);
+    padding: 15px 0;
+  }

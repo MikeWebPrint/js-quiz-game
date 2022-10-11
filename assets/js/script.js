@@ -111,18 +111,16 @@ let quiz = [Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10];
  */
 function showHighScores(e) {
   e.preventDefault();
-  if (document.getElementById('Intro')) {
+  if (document.getElementById('intro')) {
     hideIntro();
   }
   hideHeader();
-  if (document.getElementById('done')){
-    hideDone()
-  };
-  if (document.getElementsByClassName('options')){
-    hideQuestion();
-  }
-
-
+  // if (document.getElementById('done')){
+  //   hideDone()
+  // }
+  // if (document.getElementsByClassName('options')){
+  //   hideQuestion();
+  // }
   // create and insert high scores section
   var highScoresPage = document.createElement('section');
   highScoresPage.setAttribute('id', 'highScoresPage');
@@ -133,11 +131,9 @@ function showHighScores(e) {
   // create and insert scores list into scores section
   var highScoresList = document.createElement('div');
   var scores = JSON.parse(localStorage.getItem('scores'));
-
-console.log(scores);
+  console.log(scores);
   highScoresList.setAttribute('id', 'highScoresList');
   highScoresPage.appendChild(highScoresList);
-
   if (scores != null){
     for (let i=0; i<scores.length; i++){
       var hsEntry = document.createElement('div');
@@ -162,6 +158,7 @@ console.log(scores);
   document.getElementById('Back').addEventListener('click', reload)
   document.getElementById('clearHighScores').addEventListener('click', clear);
 }
+
 function reload() {
   location.reload();
 }
@@ -172,14 +169,13 @@ function hideDone() {
   document.getElementById('done').remove();
 }
 function hideQuestion(){
-  var question = document.getElementsByClassName('questions d-block')
+  var question = document.getElementsByClassName('questions');
   question[0].remove();
   }
 var viewScores = document.getElementById('viewScores');
 viewScores.addEventListener('click', showHighScores);
 function hideIntro() {
-  var intro = document.getElementById('intro');
-  intro.remove();
+  document.getElementById('intro').remove();
 }
 // var score = 42;
 
@@ -190,25 +186,25 @@ function showDone(counter) {
   done.innerHTML = '<h2>All done!</h2>';
   var scoreForm = document.createElement('form');
   scoreForm.setAttribute('id', 'scoreForm');
-  scoreForm.innerHTML = '<h3>Your final score is: <span id="score">'+ counter + '</span></h3><label for="initials">Enter your initials</label>\n<input id="initials" type="text" name="initials" maxlength="3" placeholder="ABC"></input>\n<button type="submit">Submit</button>';
+  scoreForm.innerHTML = '<h3>Your final score is: <span id="score">'+ counter + '</span></h3><label for="initials">Enter your initials</label>\n<input id="initials" type="text" name="initials" maxlength="3" placeholder="ABC">\n<button type="submit">Submit</button>';
   done.appendChild(scoreForm);
   document.body.appendChild(done);
   var score = document.getElementById('score').textContent;
   // var user = document.getElementById('initials').value.trim().toUpperCase();
+  // var user = document.getElementById('initials').value;
   var user = 'placeholder';
   scoreForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      console.log(user, score);
+      // console.log(user, score);
       // console.log(document.getElementById('initials').value.trim().toUpperCase());
       setScore(user, score);
+      // showHighScores();
+      reload();
+      // console.log(scoreForm);
   });
 }
 function showExplanation() {
-  var explanation = document.createElement('div');
-  explanation.setAttribute('id', 'result');
-  explanation.innerHTML = '<h3>Correct</h3>\n<p id="explanation">Javascript fact from previous question</p>';
-  var questionSection = document.querySelector('#questions');
-  questionSection.appendChild(explanation);
+  document.querySelector('.expHidden').setAttribute('class', 'showExp');
 }
 /*
   *************************
@@ -229,95 +225,108 @@ function makeQuestionList() {
   quiz.splice(0,5);
 }
 
-// function iterateQuizItems() {
-//   for (i=0; i < quiz.length; i++) {
-//     var questionSection = document.createElement('section');
-//     questionSection.setAttribute('class', 'questions d-block');
-//     var j=i+1;
-//     var questionNum = document.createElement('h2');
-//     questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
-//     questionSection.appendChild(questionNum);
-//     document.body.appendChild(questionSection); 
-//     var questionText = document.createElement('p');
-//     questionText.setAttribute('class', 'questionText');
-//     questionText.textContent = quiz[i].Q
-//     questionSection.appendChild(questionText);
-//     var options = document.createElement('div');
-//     options.setAttribute('class', 'options');
-//     questionSection.appendChild(options);
-//     var answers = quiz[i].answers;
-//     for (k=0; k < answers.length; k++) {
-//       var optionButton = document.createElement('button');
-//       // optionButton.setAttribute('class', 'btn');
-//       if (answers[k].isCorrect===true) {
-//       optionButton.setAttribute('data-correct', true);
-//       } else {
-//         optionButton.setAttribute('data-correct', false);
-//       }
-//       optionButton.textContent = answers[k].text;
-//       options.appendChild(optionButton);
-//     }
-//     var hr = document.createElement('hr');
-//     questionSection.appendChild(hr);
-//     // console.log(questionSection);
-//   }
-// }
-function iterateQuestion() {
-  let i=0;
-  var questionSection = document.createElement('section');
-  questionSection.setAttribute('class', 'questions d-block');
-  var j=i+1;
-  var questionNum = document.createElement('h2');
-  questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
-  questionSection.appendChild(questionNum);
-  document.body.appendChild(questionSection); 
-  var questionText = document.createElement('p');
-  questionText.setAttribute('class', 'questionText');
-  questionText.textContent = quiz[i].Q
-  questionSection.appendChild(questionText);
-  var options = document.createElement('div');
-  options.setAttribute('id', 'options');
-  questionSection.appendChild(options);
-  var answers = quiz[i].answers;
-  for (k=0; k < answers.length; k++) {
-    var isCorrect = function() {
-      var correct = this.getAttribute("data-correct");
-      alert(correct);
-    // TODO: put function here to swap to next question
-      i++;
-    };
-    var optionButton = document.createElement('button');
-    optionButton.setAttribute('class', 'btn');
-    optionButton.addEventListener('click', isCorrect, false);
-    if (answers[k].isCorrect===true) {
-    optionButton.setAttribute('data-correct', true);
-    } else {
-      optionButton.setAttribute('data-correct', false);
-    }
-    optionButton.textContent = answers[k].text;
-    options.appendChild(optionButton);
+function iterateQuizItems() {
+  for (i=0; i < quiz.length; i++) {
+    var questionSection = document.createElement('section');
+    questionSection.setAttribute('class', 'questions');
+    var j=i+1;
+    var questionNum = document.createElement('h2');
+    questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
+    questionSection.appendChild(questionNum);
+    document.body.appendChild(questionSection); 
+    var questionText = document.createElement('p');
+    questionText.setAttribute('class', 'questionText');
+    questionText.textContent = quiz[i].Q
+    questionSection.appendChild(questionText);
+    var options = document.createElement('div');
+    options.setAttribute('class', 'options');
+    questionSection.appendChild(options);
+    var answers = quiz[i].answers;
+    for (k=0; k < answers.length; k++) {
+      var optionButton = document.createElement('button');
+      // optionButton.setAttribute('class', 'btn');
+      if (answers[k].isCorrect===true) {
+      optionButton.setAttribute('data-correct', true);
+      } else {
+        optionButton.setAttribute('data-correct', false);
+      }
+      optionButton.textContent = answers[k].text;
+      options.appendChild(optionButton);
+
+
+
+      // var isCorrect = function() {
+      //   var correct = this.getAttribute("data-correct");
+      //   alert(correct);
+
+      // // TODO: put function here to swap to next question
+      //   i++;
+      // };
+
+
+
+      optionButton.addEventListener('click', showExplanation, true);
+      var oneQuestion = function(){
+        var questions = document.querySelectorAll('.questions');
+        for (i=0; i < questions.length; i++){
+          questions[i].style.display = 'none';
+          // console.log(questions);
+        }
+          // var j=questions.length;
+          // questions[j].style.display = 'block';
+          // k=0
+          // questions[k].style.display = 'block';
+          // var currentQuestion = questions[k] ;
+          // console.log(currentQuestion);
+          // var selectAnswer = function(){
+
+          // }
+
+        // select();
+        // optionButton.addEventListener('click', selectAnswer, false);
+
+        // optionButton.addEventListener('click', isCorrect, false);
+        
+        }
+      }
+      var hr = document.createElement('hr');
+      questionSection.appendChild(hr);
+      var message = document.createElement('div');
+      var isCorrect = function() {
+        this.getAttribute("data-correct");
+        return 
+      }
+      message.setAttribute('class', 'expHidden');
+      message.innerHTML = isCorrect + ' ' + quiz[i].explanation;
+      questionSection.appendChild(message);
+      console.log(questionSection);
+      // oneQuestion();
+
+
+  
   }
-  var hr = document.createElement('hr');
-  questionSection.appendChild(hr);
-  // selectAnswer();
-  // thanks to:
-  // https://www.codegrepper.com/code-examples/javascript/get+element+by+class+add+event+listener
 }
 
-
-
-
 // function currentQuestion() {
-//   var questions = document.getElementsByClassName('questions d-none');
-//   console.log(Array.from(questions)[0])
+//   var questions = document.querySelectorAll('section');
+//   // console.log(Array.from(questions)[0])
 //   // questions[0].removeAttribute('class');
 //   // questions[0].setAttribute('class','questions d-block');
+//   // console.log(questions);
+//   for (i=0; i<questions.length; i++){
+//     questions[i].style.display = 'none';
+//     console.log(questions[i])
+//   }
+//   var j=0;
+//   questions[j].style.display = 'block';
+
+
 //   // console.log(questions);
 // }
 // showOnlyCurrentQuestion()
 // console.log(document.getElementsByClassName('questions'))
 
-
+// currentQuestion()
 
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
@@ -372,16 +381,19 @@ function clear() {
   localStorage.clear();
   document.getElementById('highScoresList').remove();
 }
-
+function disableViewHighScores() {
+  document.getElementById('viewScores').style.visibility = 'hidden';
+}
 
 function startGame() {
   hideIntro();
+  disableViewHighScores();
   // stopGameButton();
-  ticktock();
+  // ticktock();
   shuffleArray(quiz);
   makeQuestionList();
-  iterateQuestion();
-  // iterateQuizItems();
+  // iterateQuestion();
+  iterateQuizItems();
   if (document.getElementById('done')){
     hideIntro();
   }
