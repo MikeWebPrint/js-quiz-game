@@ -286,7 +286,7 @@ console.log(document.getElementsByClassName('questions'))
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
 function ticktock() {
-  var counter = 100;
+  var counter = 20;
   var timer = setInterval(function(){
     // console.log(counter);
     counter--
