@@ -94,116 +94,6 @@ var Q10 = {
 // JS questions from 
 // https://www.includehelp.com/mcq/javascript-multiple-choice-questions-mcqs.aspx
 let quiz = [Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10];
-
-
-/**************************
- * DOM elements and functions
- * *************************/
-function showHighScores(e) {
-  e.preventDefault();
-  if (document.getElementById('intro')) {
-    hideIntro();
-  }
-  hideHeader();
-  // if (document.getElementById('done')){
-  //   hideDone()
-  // }
-  // if (document.getElementsByClassName('options')){
-  //   hideQuestion();
-  // }
-  // create and insert high scores section
-  var highScoresPage = document.createElement('section');
-  highScoresPage.setAttribute('id', 'highScoresPage');
-  var highScoresTitle = document.createElement('h2');
-  highScoresTitle.textContent = 'High Scores';
-  document.body.appendChild(highScoresPage);
-  highScoresPage.appendChild(highScoresTitle);
-  // create and insert scores list into scores section
-  var highScoresList = document.createElement('div');
-  var scores = JSON.parse(localStorage.getItem('scores'));
-  console.log(scores);
-  highScoresList.setAttribute('id', 'highScoresList');
-  highScoresPage.appendChild(highScoresList);
-  if (scores != null){
-    for (let i=0; i<scores.length; i++){
-      var hsEntry = document.createElement('div');
-      hsEntry.setAttribute('class', 'hsEntry')
-      var j = i + 1;
-      hsEntry.innerHTML = j +'. ' + scores[i].user +' ' +scores[i].score;
-      highScoresList.appendChild(hsEntry);
-    }
-  }
-
-  // create and insert buttons into scores section
-  var scoreButtons = document.createElement('div');
-  var backButton = document.createElement('button');
-  backButton.setAttribute('id', 'Back');
-  backButton.textContent = 'Go back';
-  var clearButton = document.createElement('button');
-  clearButton.setAttribute('id', 'clearHighScores');
-  clearButton.textContent = 'Clear High Scores';
-  scoreButtons.appendChild(backButton);
-  scoreButtons.appendChild(clearButton);
-  highScoresPage.appendChild(scoreButtons);
-  document.getElementById('Back').addEventListener('click', reload)
-  document.getElementById('clearHighScores').addEventListener('click', clear);
-}
-
-function reload() {
-  location.reload();
-}
-function hideHeader() {
-  document.getElementById('header').remove();
-}
-function hideDone() {
-  document.getElementById('done').remove();
-}
-function hideQuestion(){
-  var question = document.querySelectorAll('.questions');
-  for (i=0; i < question.length; i++){
-    question[i].remove();
-    }
-  }
-var viewScores = document.getElementById('viewScores');
-viewScores.addEventListener('click', showHighScores);
-function hideIntro() {
-  document.getElementById('intro').remove();
-}
-// var score = 42;
-
-function showDone(counter) {
-  // create and insert Done message and form section
-  var done = document.createElement('section');
-  done.setAttribute('id', 'done');
-  done.innerHTML = '<h2>All done!</h2>';
-  var scoreForm = document.createElement('form');
-  scoreForm.setAttribute('id', 'scoreForm');
-  scoreForm.innerHTML = '<h3>Your final score is: <span id="score">'+ counter + '</span></h3><label for="initials">Enter your initials</label>\n<input id="initials" type="text" name="initials" maxlength="3" placeholder="ABC">\n<button type="submit">Submit</button>';
-  done.appendChild(scoreForm);
-  document.body.appendChild(done);
-  var score = document.getElementById('score').textContent;
-  // var user = document.getElementById('initials').value.trim().toUpperCase();
-  // var user = document.getElementById('initials').value;
-  var user = 'placeholder';
-  scoreForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      // console.log(user, score);
-      // console.log(document.getElementById('initials').value.trim().toUpperCase());
-      setScore(user, score);
-      // showHighScores();
-      reload();
-      // console.log(scoreForm);
-  });
-}
-function showExplanation(e) {
-  document.querySelector('.expHidden').setAttribute('class', 'showExp');
-  if (e.target.getAttribute('data-correct')===true){
-    var msg = 'Correct! - ';
-  } else {
-    var msg = 'Incorrect! - ';
-  }
-  
-}
 /**************************
  * question data manipulation
  **************************/
@@ -219,6 +109,81 @@ function shuffleArray(array) {
 }
 function makeQuestionList() {
   quiz.splice(0,5);
+}
+
+/**************************
+ * global variables
+ * *************************/
+var highScoresPage = document.getElementById('highScoresPage');
+var viewScores = document.getElementById('viewScores');
+viewScores.addEventListener('click', showHighScores);
+// var score = 42;
+var score = document.getElementById('score').innerHTML;
+var userInput = document.getElementById('initials') //.value.trim().toUpperCase();
+var user = userInput.value;
+var done = document.getElementById('done');
+var intro = document.getElementById('intro')
+var showScore = document.getElementById('score');
+var scoreForm = document.getElementById('scoreForm');
+var start = document.getElementById('start-btn');
+start.addEventListener('click', startGame);
+scoreForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  console.log(user, score);
+  setScore(user, score);
+  showHighScores();
+});
+function showHighScores(e) {
+  if (e) {
+    e.preventDefault();
+  }
+  if (document.getElementById('intro')) {
+    hideIntro();
+  }
+  if (done) {
+    hideDone();
+  }
+  highScoresPage.setAttribute('class', 'd-block');
+  hideHeader();
+  // create and insert scores list into scores section
+  var highScoresList = document.getElementById('highScoresList');
+  var scores = JSON.parse(localStorage.getItem('scores'));
+  console.log(scores);
+  if (scores != null){
+    for (let i=0; i<scores.length; i++){
+      var hsEntry = document.createElement('div');
+      hsEntry.setAttribute('class', 'hsEntry')
+      var j = i + 1;
+      hsEntry.innerHTML = j +'. ' + scores[i].user +' ' +scores[i].score;
+      highScoresList.appendChild(hsEntry);
+    }
+  }
+  document.getElementById('Back').addEventListener('click', reload)
+  document.getElementById('clearHighScores').addEventListener('click', clear);
+}
+
+function reload() {
+  location.reload();
+}
+function hideHeader() {
+  document.getElementById('header').remove();
+}
+function hideDone(){
+  done.setAttribute('class', 'd-none');
+}
+function hideQuestion(){
+  var question = document.querySelectorAll('.questions');
+  for (i=0; i < question.length; i++){
+    question[i].remove();
+    }
+  }
+function hideIntro() {
+  intro.setAttribute('class', 'd-none');
+}
+// show score and capture user initials section
+function showDone(counter) {
+  done.setAttribute('class', 'd-block');
+  showScore.textContent= counter;
 }
 
 function iterateQuizItems() {
@@ -247,11 +212,12 @@ function iterateQuizItems() {
       }
       optionButton.textContent = answers[k].text;
       options.appendChild(optionButton);
-      var message = document.createElement('div');
-      var isCorrect = optionButton.getAttribute('data-correct');
-      message.setAttribute('class', 'expHidden');
-      message.innerHTML = showExplanation + ' - ' + quiz[i].explanation;
-      optionButton.addEventListener('click', showExplanation, true);
+      createExplanation();
+      // var message = document.createElement('div');
+      // var isCorrect = optionButton.getAttribute('data-correct');
+      // message.setAttribute('class', 'expHidden');
+      // message.innerHTML = showExplanation + ' - ' + quiz[i].explanation;
+      // optionButton.addEventListener('click', showExplanation, true);
       var oneQuestion = function(){
         var questions = document.querySelectorAll('.questions');
         for (i=0; i < questions.length; i++){
@@ -275,7 +241,7 @@ function iterateQuizItems() {
         
         }
       }
-      questionSection.appendChild(message);
+      // questionSection.appendChild(message);
       console.log(questionSection);
         var hr = document.createElement('hr');
         questionSection.appendChild(hr);
@@ -306,7 +272,7 @@ function iterateQuizItems() {
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
 function ticktock() {
-  var counter = 10;
+  var counter = 15;
   var timer = setInterval(function(){
     // console.log(counter);
     var timeLeft = document.getElementById('time-left')
@@ -320,6 +286,13 @@ function ticktock() {
   }, 1000);
   // TODO set counter to score
 }
+
+
+
+
+
+
+
 function stopGameButton() {
   var stopButton = document.createElement('button');
   stopButton.textContent = 'Stop Game';
@@ -369,11 +342,10 @@ function startGame() {
   // iterateQuestion();
   iterateQuizItems();
   if (document.getElementById('done')){
-    hideIntro();
+    // hideIntro();
   }
 }
-var start = document.getElementById('start-btn');
-start.addEventListener('click', startGame);
+
 
 /*
 *************************
@@ -392,10 +364,72 @@ start.addEventListener('click', startGame);
 // iterateQuizItems();
 // console.log(quiz);
 // showQuestion();
-// showDone()
 // shuffleArray(quiz);
 // makeQuestionList();
 // showExplanation();
 // showHighScores();
 // hideIntro();
 // showOnlyCurrentQuestion();
+
+
+var options = document.getElementById('options')
+var explanation = document.getElementById('explanation');
+
+
+function createExplanation() {
+  if (options){
+    var optionButton = options.querySelectorAll('button')
+    var isCorrect = optionButton.getAttribute('data-correct');
+    for (i=0; i< optionButton.length; i++){
+      optionButton[i].addEventListener('click', function(e){
+        console.log('hello')
+        explanation.setAttribute('class', 'd-block');
+        if (e.target.getAttribute('data-correct')===true){
+          alert('correct');
+          var msg = 'Correct! - ';
+        } else {
+          alert('incorrect');
+          var msg = 'Incorrect! - ';
+        }
+        explanation.textContent = msg;
+        console.log(explanation);
+  
+  
+      }, true);
+    }
+    // optionButton.addEventListener('click', showExplanation, true);
+    // optionButton.addEventListener('click', function(e){
+    //   console.log('hello')
+    //   explanation.setAttribute('class', 'd-block');
+    //   if (e.target.getAttribute('data-correct')===true){
+    //     alert('correct');
+    //     var msg = 'Correct! - ';
+    //   } else {
+    //     alert('incorrect');
+    //     var msg = 'Incorrect! - ';
+    //   }
+    //   explanation.textContent = msg;
+
+
+
+    // }, true);
+
+
+  }
+
+}
+
+
+
+
+      // function showExplanation(e) {
+      //   document.querySelector('.expHidden').setAttribute('class', 'showExp');
+      //   if (e.target.getAttribute('data-correct')===true){
+      //     alert('correct');
+      //     var msg = 'Correct! - ';
+      //   } else {
+      //     alert('incorrect');
+      //     var msg = 'Incorrect! - ';
+      //   }
+      //   explanation.textContent = msg;
+      // }

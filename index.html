@@ -19,6 +19,26 @@
     <p>Let's brush up on your JavaScript knowledge!  Answer the following questions about JS features before the time runs out.  Remember, wrong answers reduce your time left, so try to get them all correct!</p>
     <button id="start-btn" type="button" name="Start">Start Game</button>
   </section>
+  <section id="done" class="d-none">
+    <h2>All done!</h2>
+    <form action="" id="scoreForm">
+      <h3>Your final score is: <span id="score"></span></h3>
+      <label for="initials">Enter your initials </label>
+      <input id="initials" type="text" name="initials" maxlength="3" placeholder="ABC">
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+  <section id="highScoresPage" class="d-none">
+    <h2>High Scores</h2>
+    <div id="highScoresList"></div>
+    <div>
+      <button id="Back">Go back</button>
+      <button id="clearHighScores">Clear High Scores</button>
+    </div>
+  </section>
+  <section id="explanation" class="d-none">
+
+  </section>
 
 
   <script src="assets/js/script.js"></script>
