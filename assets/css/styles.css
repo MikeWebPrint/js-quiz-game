@@ -113,11 +113,11 @@ input:focus {
 input:focus::placeholder {
   color: transparent;
 }
-#done button {
+#done button, header button {
   height: 40px;
   transform: translateY(2px);
   margin: 10px;
-  width: 75px;
+  /* width: 75px; */
 
 }
 /* scores */

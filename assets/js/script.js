@@ -117,7 +117,7 @@ function makeQuestionList() {
 var highScoresPage = document.getElementById('highScoresPage');
 var viewScores = document.getElementById('viewScores');
 viewScores.addEventListener('click', showHighScores);
-// var score = 42;
+// var score = 42; //for manual testing
 var score = document.getElementById('score').innerHTML;
 var userInput = document.getElementById('initials') //.value.trim().toUpperCase();
 var user = userInput.value;
@@ -133,6 +133,13 @@ scoreForm.addEventListener('submit', function(e) {
   setScore(user, score);
   showHighScores();
 });
+var stopButton = document.getElementById('stop');
+var timeLeft = document.getElementById('time-left')
+var isWin = false;
+var isStopped = false;
+var options = document.getElementById('options')
+var explanation = document.getElementById('explanation');
+
 function showHighScores(e) {
   if (e) {
     e.preventDefault();
@@ -161,7 +168,14 @@ function showHighScores(e) {
   document.getElementById('Back').addEventListener('click', reload)
   document.getElementById('clearHighScores').addEventListener('click', clear);
 }
-
+// Utility functions
+function clear() {
+  localStorage.clear();
+  document.getElementById('highScoresList').remove();
+}
+function disableViewHighScores() {
+  document.getElementById('viewScores').style.visibility = 'hidden';
+}
 function reload() {
   location.reload();
 }
@@ -212,7 +226,8 @@ function iterateQuizItems() {
       }
       optionButton.textContent = answers[k].text;
       options.appendChild(optionButton);
-      createExplanation();
+      explanation.textContent = quiz[i].explanation
+    }
       // var message = document.createElement('div');
       // var isCorrect = optionButton.getAttribute('data-correct');
       // message.setAttribute('class', 'expHidden');
@@ -240,68 +255,61 @@ function iterateQuizItems() {
         // optionButton.addEventListener('click', isCorrect, false);
         
         }
-      }
+
       // questionSection.appendChild(message);
       console.log(questionSection);
-        var hr = document.createElement('hr');
-        questionSection.appendChild(hr);
+
   }
 }
 
-// function currentQuestion() {
-//   var questions = document.querySelectorAll('section');
-//   // console.log(Array.from(questions)[0])
-//   // questions[0].removeAttribute('class');
-//   // questions[0].setAttribute('class','questions d-block');
-//   // console.log(questions);
-//   for (i=0; i<questions.length; i++){
-//     questions[i].style.display = 'none';
-//     console.log(questions[i])
-//   }
-//   var j=0;
-//   questions[j].style.display = 'block';
+function currentQuestion() {
+  var questions = document.querySelectorAll('.questions');
+  // console.log(Array.from(questions)[0])
+  // questions[0].removeAttribute('class');
+  // questions[0].setAttribute('class','questions d-block');
+  // console.log(questions);
+  for (i=0; i<questions.length; i++){
+    questions[i].style.display = 'none';
+    console.log(questions[i])
+  }
+  var j=0;
+  questions[j].style.display = 'block';
 
 
-//   // console.log(questions);
-// }
+  // console.log(questions);
+}
 // showOnlyCurrentQuestion()
-// console.log(document.getElementsByClassName('questions'))
+console.log(document.getElementsByClassName('questions'))
 
 // currentQuestion()
 
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
 function ticktock() {
-  var counter = 15;
+  var counter = 100;
   var timer = setInterval(function(){
     // console.log(counter);
-    var timeLeft = document.getElementById('time-left')
     counter--
     timeLeft.innerHTML = 'Time: ' + counter;
-    if (counter === 0) {
-      clearInterval(timer);
-      hideQuestion();
-      showDone(counter);
-    }
+      if ((counter === 0) || (isWin===true)) {
+        showDone(counter);
+        clearInterval(timer);
+        hideQuestion();
+      }
+      if (isStopped ===true) {
+        clearInterval(timer);
+        hideQuestion();
+        reload();
+      }
+    
   }, 1000);
-  // TODO set counter to score
 }
-
-
-
-
-
-
-
-function stopGameButton() {
-  var stopButton = document.createElement('button');
-  stopButton.textContent = 'Stop Game';
-  document.getElementById('stop').appendChild(stopButton);
+function showStopButton() {
+  stopButton.setAttribute('class', 'd-block');
   stopButton.addEventListener('click', function(){
-    clearInterval(ticktock);
-  });
+    isStopped = true;
+  })
 }
-
 /************************
 * scoring
 ***********************/
@@ -323,30 +331,18 @@ function setScore(user, score) {
   highScores.splice(5);
   localStorage.setItem('scores', JSON.stringify(highScores))
 }
-// Utility functions
-function clear() {
-  localStorage.clear();
-  document.getElementById('highScoresList').remove();
-}
-function disableViewHighScores() {
-  document.getElementById('viewScores').style.visibility = 'hidden';
-}
+
 // startGame calls other utility functions
 function startGame() {
-  hideIntro();
-  disableViewHighScores();
-  // stopGameButton();
-  ticktock();
-  shuffleArray(quiz);
-  makeQuestionList();
-  // iterateQuestion();
-  iterateQuizItems();
-  if (document.getElementById('done')){
-    // hideIntro();
-  }
+  isWin = false; //haven't won yet
+  shuffleArray(quiz); //shuffle questions deck
+  makeQuestionList(); //pick 5 questions
+  iterateQuizItems(); //generate questions HTML
+  hideIntro(); //remove the intro text and button 
+  disableViewHighScores(); //hide high scores link
+  showStopButton(); //user can cancel out 
+  ticktock(); // show timer
 }
-
-
 /*
 *************************
 * triggers used in development and testing
@@ -372,8 +368,7 @@ function startGame() {
 // showOnlyCurrentQuestion();
 
 
-var options = document.getElementById('options')
-var explanation = document.getElementById('explanation');
+
 
 
 function createExplanation() {
