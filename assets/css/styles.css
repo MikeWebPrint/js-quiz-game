@@ -79,7 +79,7 @@ main section {
 }
 /* buttons */
 button {
-  width: 200px;
+  width: 125px;
   height: 75px;
   text-align: center;
   padding: auto;
@@ -98,6 +98,10 @@ button:hover, button:active, button:focus {
 }
 button[data-correct] {
   width: 450px;
+  max-width: 100%;
+}
+#scoreButtonsDiv {
+  display: flex;
 }
 input {
   width: 75px;
