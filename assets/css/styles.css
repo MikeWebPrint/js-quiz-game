@@ -167,7 +167,9 @@ input:focus::placeholder {
 
 }
 #time-left {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 40px;
   min-height: 40px;
   text-align: center;
