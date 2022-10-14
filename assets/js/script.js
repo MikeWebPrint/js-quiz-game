@@ -121,23 +121,22 @@ viewScores.addEventListener('click', showHighScores);
 // var userInput = document.getElementById('initials') //.value.trim().toUpperCase();
 // var user = userInput.value;
 var done = document.getElementById('done');
-var intro = document.getElementById('intro')
-var showScore = document.getElementById('score');
-// var score = showScore.textContent;
-var score = counter;
+var intro = document.getElementById('intro');
+var showScore = document.getElementById('showScore')
 var scoreForm = document.getElementById('scoreForm');
 var start = document.getElementById('start-btn');
+var timeLeft = document.getElementById('time-left')
+var score = timeLeft.textContent;
 start.addEventListener('click', startGame);
 scoreForm.addEventListener('submit', function(e) {
   e.preventDefault();
   var user = document.getElementById('initials').value.trim().toUpperCase();
   // var user = userInput.value;
-  console.log(user, score);
-  setScore(user, score);
+  // console.log(user, score);
+  setScore(user);
   showHighScores();
 });
 var stopButton = document.getElementById('stop');
-var timeLeft = document.getElementById('time-left')
 var isWin = false;
 var isStopped = false;
 var isCanceled = false;
@@ -169,7 +168,7 @@ function showHighScores(e) {
       var hsEntry = document.createElement('div');
       hsEntry.setAttribute('class', 'hsEntry')
       var j = i + 1;
-      hsEntry.innerHTML = j +'. ' + scores[i].user +' ' +scores[i].score;
+      hsEntry.innerHTML = j +'. ' + scores[i].user +' - ' +scores[i].score;
       highScoresList.appendChild(hsEntry);
     }
   }
@@ -202,7 +201,10 @@ function hideIntro() {
 // show score and capture user initials section
 function showDone(counter) {
   done.setAttribute('class', 'd-block');
-  showScore.textContent = counter;
+  var counter = timeLeft.textContent;
+  // showScore.textContent = '25'
+  // showScore.textContent = counter;
+  showScore.textContent =  counter;
   stopButton.setAttribute('class', 'd-none');
   document.getElementById('viewScores').setAttribute('class', 'd-block');
 }
@@ -267,15 +269,15 @@ function iterateQuizItems() {
 }
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
-var counter = 10;
+var counter = 30;
 function ticktock() {
   var timer = setInterval(function(){
     // console.log(counter);
     counter--
     timeLeft.textContent = counter;
       if ((counter === 0) || (isWin===true)) {
-        showDone(counter);
         clearInterval(timer);
+        showDone(counter);
         hideQuestion();
       }
       if (isCanceled ===true) {
@@ -284,8 +286,8 @@ function ticktock() {
         reload();
       }
       if (isWin===true){
-        showDone();
         clearInterval(timer);
+        showDone();
         hideQuestion();
       }
       if (counter < 6){
@@ -308,7 +310,8 @@ function getScore() {
   var scores = localStorage.getItem('scores');
   return scores;
 }
-function setScore(user, score) {
+function setScore(user) {
+  var score = document.getElementById('showScore').textContent;
   getScore();
   explanationDiv.setAttribute('class', 'd-none');
   if (getScore() === null){
