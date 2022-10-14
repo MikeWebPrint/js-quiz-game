@@ -169,6 +169,7 @@ function showHighScores(e) {
       hsEntry.setAttribute('class', 'hsEntry')
       var j = i + 1;
       hsEntry.innerHTML = j +'. ' + scores[i].user +' - ' +scores[i].score;
+      highScoresList.setAttribute('class', 'd-block')
       highScoresList.appendChild(hsEntry);
     }
   }
@@ -215,7 +216,7 @@ function iterateQuizItems() {
   var j=i+1;
   var nextQuestion = quiz[j];
   var questionBlock = document.createElement('div');
-  var questionNum = document.createElement('h2');
+  var questionNum = document.createElement('h3');
   questionBlock.appendChild(questionNum)
   questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
   questionSection.setAttribute('class', 'd-block');

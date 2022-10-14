@@ -11,8 +11,10 @@
 <body>
   <header id="header">
     <a href="/" id="viewScores">High Scores</a>
-    <button id="stop" class="d-none">Stop</button>
-    <div id="timer">Time: <div id="time-left" class="accent">__</div></div>
+    <button id="stop" class="d-none">Stop Game</button>
+    <div>
+      <div id="timer">Time: <span id="time-left" class="accent"></span></div>
+    </div>
   </header>
   <section id="intro">
     <h1>Coding Quiz Challenge</h1>
@@ -33,7 +35,7 @@
   </section>
   <section id="highScoresPage" class="d-none">
     <h2>High Scores</h2>
-    <div id="highScoresList"></div>
+    <div id="highScoresList" class="d-none"></div>
     <div id="scoreButtonsDiv">
       <button id="Back">Go back</button>
       <button id="clearHighScores">Clear High Scores</button>
