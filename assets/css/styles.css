@@ -3,10 +3,11 @@
   --bodyText: #3f3f3f;
   --accentColor: #283866;
   --accentColor2: #e38c00;
-  --lighterBodyText: #707070;
+  --lighterBodyText: #8f8f8f;
   --background: #dedede;
   --lighterBackground: #f6f6f6;
   --border-radius: 3px;
+  --danger: #af0000;
 }
 /* add reset */
 * {
@@ -48,7 +49,12 @@ body > * {
 header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+
+}
+header > * {
+  margin: 10px;
 }
 main section {
   margin-bottom: 50px;
@@ -148,14 +154,22 @@ input:focus::placeholder {
 .d-none {
   display: none;
 }
-.expHidden {
-  visibility: hidden;
-  padding: 15px 0;
-  transition: visibility ease-in 1s;
-}
-.showExp {
-    visibility: visible;
+#explanation {
     color: var(--lighterBodyText);
-    padding: 15px 0;
-    transition: visibility ease-in 1s;
+    font-weight: bold;
+
+}
+#time-left {
+  display: inline-block;
+  min-width: 40px;
+  height: ;
+  text-align: center;
+  color: var(--lighterBackground);
+  padding: 5px;
+}
+.accent {
+  background-color: var(--accentColor2);
+}
+.red {
+  background-color: var(--danger);
 }

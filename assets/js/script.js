@@ -17,7 +17,7 @@ var Q2 = {
     {"text": "Object-based", "isCorrect": true} ,
     {"text": "Functional programming", "isCorrect":false} ,
     {"text": "All of the above", "isCorrect":false}], 
-  "explanation": "JavaScript is an object-oriented based programming language."
+  "explanation": "JavaScript is an object based programming language."
 }
 var Q3 = {
   "Q": "Which of the following statement(s) is true about the JavaScript?" ,
@@ -118,17 +118,20 @@ var highScoresPage = document.getElementById('highScoresPage');
 var viewScores = document.getElementById('viewScores');
 viewScores.addEventListener('click', showHighScores);
 // var score = 42; //for manual testing
-var score = document.getElementById('score').innerHTML;
-var userInput = document.getElementById('initials') //.value.trim().toUpperCase();
-var user = userInput.value;
+// var userInput = document.getElementById('initials') //.value.trim().toUpperCase();
+// var user = userInput.value;
 var done = document.getElementById('done');
 var intro = document.getElementById('intro')
 var showScore = document.getElementById('score');
+// var score = showScore.textContent;
+var score = counter;
 var scoreForm = document.getElementById('scoreForm');
 var start = document.getElementById('start-btn');
 start.addEventListener('click', startGame);
 scoreForm.addEventListener('submit', function(e) {
   e.preventDefault();
+  var user = document.getElementById('initials').value.trim().toUpperCase();
+  // var user = userInput.value;
   console.log(user, score);
   setScore(user, score);
   showHighScores();
@@ -137,8 +140,13 @@ var stopButton = document.getElementById('stop');
 var timeLeft = document.getElementById('time-left')
 var isWin = false;
 var isStopped = false;
+var isCanceled = false;
+
+var questionSection = document.getElementById('questionsArea');
 var options = document.getElementById('options')
+var explanationDiv = document.getElementById('explanationContainer');
 var explanation = document.getElementById('explanation');
+
 
 function showHighScores(e) {
   if (e) {
@@ -174,7 +182,7 @@ function clear() {
   document.getElementById('highScoresList').remove();
 }
 function disableViewHighScores() {
-  document.getElementById('viewScores').style.visibility = 'hidden';
+  document.getElementById('viewScores').setAttribute('class', 'd-none');
 }
 function reload() {
   location.reload();
@@ -186,10 +194,7 @@ function hideDone(){
   done.setAttribute('class', 'd-none');
 }
 function hideQuestion(){
-  var question = document.querySelectorAll('.questions');
-  for (i=0; i < question.length; i++){
-    question[i].remove();
-    }
+  questionSection.setAttribute('class', 'd-none')
   }
 function hideIntro() {
   intro.setAttribute('class', 'd-none');
@@ -197,117 +202,103 @@ function hideIntro() {
 // show score and capture user initials section
 function showDone(counter) {
   done.setAttribute('class', 'd-block');
-  showScore.textContent= counter;
+  showScore.textContent = counter;
+  stopButton.setAttribute('class', 'd-none');
+  document.getElementById('viewScores').setAttribute('class', 'd-block');
 }
 
+var i=0;
 function iterateQuizItems() {
-  for (i=0; i < quiz.length; i++) {
-    var questionSection = document.createElement('section');
-    questionSection.setAttribute('class', 'questions');
-    var j=i+1;
-    var questionNum = document.createElement('h2');
-    questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
-    questionSection.appendChild(questionNum);
-    document.body.appendChild(questionSection); 
-    var questionText = document.createElement('p');
-    questionText.setAttribute('class', 'questionText');
-    questionText.textContent = quiz[i].Q
-    questionSection.appendChild(questionText);
-    var options = document.createElement('div');
-    options.setAttribute('class', 'options');
-    questionSection.appendChild(options);
-    var answers = quiz[i].answers;
-    for (k=0; k < answers.length; k++) {
-      var optionButton = document.createElement('button');
-      if (answers[k].isCorrect===true) {
-        optionButton.setAttribute('data-correct', true);
-        } else {
-          optionButton.setAttribute('data-correct', false);
-      }
-      optionButton.textContent = answers[k].text;
-      options.appendChild(optionButton);
-      explanation.textContent = quiz[i].explanation
+  var currentQuestion = quiz[i];
+  var j=i+1;
+  var nextQuestion = quiz[j];
+  var questionBlock = document.createElement('div');
+  var questionNum = document.createElement('h2');
+  questionBlock.appendChild(questionNum)
+  questionNum.innerHTML = 'JS Question <span id="questionNum">'+ j + '</span>';
+  questionSection.setAttribute('class', 'd-block');
+  questionSection.appendChild(questionBlock);
+  var questionText = document.createElement('p');
+  questionText.setAttribute('class', 'questionText');
+  questionBlock.appendChild(questionText)
+  questionText.textContent = currentQuestion.Q
+  questionBlock.appendChild(questionText);
+  var options = document.createElement('div');
+  options.setAttribute('class', 'options');
+  questionBlock.appendChild(options);
+  var answers = currentQuestion.answers;
+  for (k=0; k < answers.length; k++) {
+    var optionButton = document.createElement('button');
+    if (answers[k].isCorrect===true) {
+      optionButton.setAttribute('data-correct', true);
+      } else {
+        optionButton.setAttribute('data-correct', false);
     }
-      // var message = document.createElement('div');
-      // var isCorrect = optionButton.getAttribute('data-correct');
-      // message.setAttribute('class', 'expHidden');
-      // message.innerHTML = showExplanation + ' - ' + quiz[i].explanation;
-      // optionButton.addEventListener('click', showExplanation, true);
-      var oneQuestion = function(){
-        var questions = document.querySelectorAll('.questions');
-        for (i=0; i < questions.length; i++){
-          questions[i].style.display = 'none';
-          // console.log(questions);
-        }
-          // var j=questions.length;
-          // questions[j].style.display = 'block';
-          // k=0
-          // questions[k].style.display = 'block';
-          // var currentQuestion = questions[k] ;
-          // console.log(currentQuestion);
-          // var selectAnswer = function(){
+    optionButton.textContent = answers[k].text;
+    options.appendChild(optionButton);
+    optionButton.addEventListener('click', function(e){
+      console.log(currentQuestion);
+      console.log(nextQuestion);
+      explanationDiv.setAttribute('class', 'd-block');
+      var correctMsg;
+      var isCorrect = e.target.getAttribute('data-correct');
+      if (isCorrect==='true') {
+        correctMsg = 'Correct - '
+        console.log(this)
 
-          // }
-
-        // select();
-        // optionButton.addEventListener('click', selectAnswer, false);
-
-        // optionButton.addEventListener('click', isCorrect, false);
-        
-        }
-
-      // questionSection.appendChild(message);
-      console.log(questionSection);
-
+      } else {
+        correctMsg = 'Wrong - '
+        console.log(this)
+        timePenalty();
+      }
+      explanation.innerHTML = correctMsg + quiz[i].explanation //this should go into the event handler for validating the button selection
+      if (j< quiz.length){
+        questionBlock.setAttribute('class', 'd-none');
+        i++;
+        iterateQuizItems();
+      } else {
+        hideQuestion();
+        isStopped = true;
+        showDone()
+        isWin=true;
+      }
+    });
   }
 }
-
-function currentQuestion() {
-  var questions = document.querySelectorAll('.questions');
-  // console.log(Array.from(questions)[0])
-  // questions[0].removeAttribute('class');
-  // questions[0].setAttribute('class','questions d-block');
-  // console.log(questions);
-  for (i=0; i<questions.length; i++){
-    questions[i].style.display = 'none';
-    console.log(questions[i])
-  }
-  var j=0;
-  questions[j].style.display = 'block';
-
-
-  // console.log(questions);
-}
-// showOnlyCurrentQuestion()
-console.log(document.getElementsByClassName('questions'))
-
-// currentQuestion()
-
 
 // https://stackoverflow.com/questions/1191865/code-for-a-simple-javascript-countdown-timer
+var counter = 10;
 function ticktock() {
-  var counter = 20;
   var timer = setInterval(function(){
     // console.log(counter);
     counter--
-    timeLeft.innerHTML = 'Time: ' + counter;
+    timeLeft.textContent = counter;
       if ((counter === 0) || (isWin===true)) {
         showDone(counter);
         clearInterval(timer);
         hideQuestion();
       }
-      if (isStopped ===true) {
+      if (isCanceled ===true) {
         clearInterval(timer);
         hideQuestion();
         reload();
       }
+      if (isWin===true){
+        showDone();
+        clearInterval(timer);
+        hideQuestion();
+      }
+      if (counter < 6){
+        solidRed();
+      }
     
   }, 1000);
 }
+
 function showStopButton() {
   stopButton.setAttribute('class', 'd-block');
   stopButton.addEventListener('click', function(){
-    isStopped = true;
+    isCanceled = true;
   })
 }
 /************************
@@ -319,6 +310,7 @@ function getScore() {
 }
 function setScore(user, score) {
   getScore();
+  explanationDiv.setAttribute('class', 'd-none');
   if (getScore() === null){
     var highScores =[];
   } else {
@@ -331,7 +323,19 @@ function setScore(user, score) {
   highScores.splice(5);
   localStorage.setItem('scores', JSON.stringify(highScores))
 }
-
+function timePenalty() {
+  counter = counter - 5;
+  flashRed();
+}
+function flashRed() {
+  timeLeft.setAttribute('class', 'red')
+  var flash = setTimeout(function(){
+    timeLeft.setAttribute('class', 'accent')
+  }, 2000) 
+}
+function solidRed() {
+  timeLeft.setAttribute('class', 'red')
+}
 // startGame calls other utility functions
 function startGame() {
   isWin = false; //haven't won yet
@@ -371,60 +375,3 @@ function startGame() {
 
 
 
-function createExplanation() {
-  if (options){
-    var optionButton = options.querySelectorAll('button')
-    var isCorrect = optionButton.getAttribute('data-correct');
-    for (i=0; i< optionButton.length; i++){
-      optionButton[i].addEventListener('click', function(e){
-        console.log('hello')
-        explanation.setAttribute('class', 'd-block');
-        if (e.target.getAttribute('data-correct')===true){
-          alert('correct');
-          var msg = 'Correct! - ';
-        } else {
-          alert('incorrect');
-          var msg = 'Incorrect! - ';
-        }
-        explanation.textContent = msg;
-        console.log(explanation);
-  
-  
-      }, true);
-    }
-    // optionButton.addEventListener('click', showExplanation, true);
-    // optionButton.addEventListener('click', function(e){
-    //   console.log('hello')
-    //   explanation.setAttribute('class', 'd-block');
-    //   if (e.target.getAttribute('data-correct')===true){
-    //     alert('correct');
-    //     var msg = 'Correct! - ';
-    //   } else {
-    //     alert('incorrect');
-    //     var msg = 'Incorrect! - ';
-    //   }
-    //   explanation.textContent = msg;
-
-
-
-    // }, true);
-
-
-  }
-
-}
-
-
-
-
-      // function showExplanation(e) {
-      //   document.querySelector('.expHidden').setAttribute('class', 'showExp');
-      //   if (e.target.getAttribute('data-correct')===true){
-      //     alert('correct');
-      //     var msg = 'Correct! - ';
-      //   } else {
-      //     alert('incorrect');
-      //     var msg = 'Incorrect! - ';
-      //   }
-      //   explanation.textContent = msg;
-      // }
