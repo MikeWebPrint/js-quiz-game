@@ -98,6 +98,7 @@ let quiz = [Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10];
  * question data manipulation
  **************************/
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+// shuffle available questions to random order
 function shuffleArray(array) {
   array.slice(0);
   for (var i = array.length - 1; i > 0; i--) {
@@ -107,6 +108,7 @@ function shuffleArray(array) {
       array[j] = temp;
   } 
 }
+// limit to 5 questions for the quiz
 function makeQuestionList() {
   quiz.splice(0,5);
 }
@@ -117,9 +119,6 @@ function makeQuestionList() {
 var highScoresPage = document.getElementById('highScoresPage');
 var viewScores = document.getElementById('viewScores');
 viewScores.addEventListener('click', showHighScores);
-// var score = 42; //for manual testing
-// var userInput = document.getElementById('initials') //.value.trim().toUpperCase();
-// var user = userInput.value;
 var done = document.getElementById('done');
 var intro = document.getElementById('intro');
 var showScore = document.getElementById('showScore')
@@ -146,7 +145,7 @@ var options = document.getElementById('options')
 var explanationDiv = document.getElementById('explanationContainer');
 var explanation = document.getElementById('explanation');
 
-
+// show high scores page and hide other page elements
 function showHighScores(e) {
   if (e) {
     e.preventDefault();
@@ -159,7 +158,7 @@ function showHighScores(e) {
   }
   highScoresPage.setAttribute('class', 'd-block');
   hideHeader();
-  // create and insert scores list into scores section
+  // create and insert scores list into scores section, buttons
   var highScoresList = document.getElementById('highScoresList');
   var scores = JSON.parse(localStorage.getItem('scores'));
   console.log(scores);
@@ -176,17 +175,25 @@ function showHighScores(e) {
   document.getElementById('Back').addEventListener('click', reload)
   document.getElementById('clearHighScores').addEventListener('click', clear);
 }
+
+/***********************
 // Utility functions
+***********************/
+
+// clear existing scores from local storage
 function clear() {
   localStorage.clear();
   document.getElementById('highScoresList').remove();
 }
+// disable scores link
 function disableViewHighScores() {
   document.getElementById('viewScores').setAttribute('class', 'd-none');
 }
+// go back to initial state
 function reload() {
   location.reload();
 }
+// hide various elements
 function hideHeader() {
   document.getElementById('header').remove();
 }
@@ -209,7 +216,7 @@ function showDone(counter) {
   stopButton.setAttribute('class', 'd-none');
   document.getElementById('viewScores').setAttribute('class', 'd-block');
 }
-
+// loop through questions and create each question block with answers, insert into DOM
 var i=0;
 function iterateQuizItems() {
   var currentQuestion = quiz[i];
@@ -229,6 +236,7 @@ function iterateQuizItems() {
   var options = document.createElement('div');
   options.setAttribute('class', 'options');
   questionBlock.appendChild(options);
+  // assign correct/incorrect values to each button
   var answers = currentQuestion.answers;
   for (k=0; k < answers.length; k++) {
     var optionButton = document.createElement('button');
@@ -247,14 +255,13 @@ function iterateQuizItems() {
       var isCorrect = e.target.getAttribute('data-correct');
       if (isCorrect==='true') {
         correctMsg = 'Correct - '
-        console.log(this)
-
       } else {
         correctMsg = 'Wrong - '
-        console.log(this)
         timePenalty();
       }
-      explanation.innerHTML = correctMsg + quiz[i].explanation //this should go into the event handler for validating the button selection
+      // reveal the explanation and whether user answered correctly
+      explanation.innerHTML = correctMsg + quiz[i].explanation
+      // go to next question, if last question end game
       if (j< quiz.length){
         questionBlock.setAttribute('class', 'd-none');
         i++;
@@ -276,28 +283,32 @@ function ticktock() {
     // console.log(counter);
     counter--
     timeLeft.textContent = counter;
+      // normal action
       if ((counter === 0) || (isWin===true)) {
         clearInterval(timer);
-        showDone(counter);
+        showDone();
         hideQuestion();
       }
+      // stop button action
       if (isCanceled ===true) {
         clearInterval(timer);
         hideQuestion();
         reload();
       }
+      // win action
       if (isWin===true){
         clearInterval(timer);
         showDone();
         hideQuestion();
       }
+      // warning time almost done
       if (counter < 6){
         solidRed();
       }
     
   }, 1000);
 }
-
+// cancelling the game
 function showStopButton() {
   stopButton.setAttribute('class', 'd-block');
   stopButton.addEventListener('click', function(){
@@ -311,15 +322,16 @@ function getScore() {
   var scores = localStorage.getItem('scores');
   return scores;
 }
+// get and set scores into localStorage
 function setScore(user) {
   var score = document.getElementById('showScore').textContent;
   getScore();
   explanationDiv.setAttribute('class', 'd-none');
   if (getScore() === null){
-    var highScores =[];
-  } else {
-    var highScores = JSON.parse(localStorage.getItem('scores'));
-  }
+      var highScores =[];
+    } else {
+      var highScores = JSON.parse(localStorage.getItem('scores'));
+    }
   highScores.push({user, score})
   highScores.sort(function(a,b){
     return b.score - a.score;
@@ -327,16 +339,19 @@ function setScore(user) {
   highScores.splice(5);
   localStorage.setItem('scores', JSON.stringify(highScores))
 }
+// action for selecting wrong answer
 function timePenalty() {
   counter = counter - 5;
   flashRed();
 }
+// timer goes red for 2 seconds
 function flashRed() {
   timeLeft.setAttribute('class', 'red')
   var flash = setTimeout(function(){
     timeLeft.setAttribute('class', 'accent')
   }, 2000) 
 }
+// timer goes red - to be called in last few seconds
 function solidRed() {
   timeLeft.setAttribute('class', 'red')
 }
@@ -351,29 +366,7 @@ function startGame() {
   showStopButton(); //user can cancel out 
   ticktock(); // show timer
 }
-/*
-*************************
-* triggers used in development and testing
-* ************************
-*/
-// hideIntro();
-// showDone()
-// startGame()
-// ticktock();
-// hideIntro();
-// getScore();
-// setScore(score);
-// shuffleArray(quiz);
-// makeQuestionList();
-// iterateQuizItems();
-// console.log(quiz);
-// showQuestion();
-// shuffleArray(quiz);
-// makeQuestionList();
-// showExplanation();
-// showHighScores();
-// hideIntro();
-// showOnlyCurrentQuestion();
+
 
 
 
