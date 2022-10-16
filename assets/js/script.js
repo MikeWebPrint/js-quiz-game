@@ -130,8 +130,6 @@ start.addEventListener('click', startGame);
 scoreForm.addEventListener('submit', function(e) {
   e.preventDefault();
   var user = document.getElementById('initials').value.trim().toUpperCase();
-  // var user = userInput.value;
-  // console.log(user, score);
   setScore(user);
   showHighScores();
 });
@@ -139,7 +137,6 @@ var stopButton = document.getElementById('stop');
 var isWin = false;
 var isStopped = false;
 var isCanceled = false;
-
 var questionSection = document.getElementById('questionsArea');
 var options = document.getElementById('options')
 var explanationDiv = document.getElementById('explanationContainer');
@@ -210,8 +207,6 @@ function hideIntro() {
 function showDone(counter) {
   done.setAttribute('class', 'd-block');
   var counter = timeLeft.textContent;
-  // showScore.textContent = '25'
-  // showScore.textContent = counter;
   showScore.textContent =  counter;
   stopButton.setAttribute('class', 'd-none');
   document.getElementById('viewScores').setAttribute('class', 'd-block');
@@ -294,12 +289,6 @@ function ticktock() {
         clearInterval(timer);
         hideQuestion();
         reload();
-      }
-      // win action
-      if (isWin===true){
-        clearInterval(timer);
-        showDone();
-        hideQuestion();
       }
       // warning time almost done
       if (counter < 6){
